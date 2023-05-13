@@ -4,6 +4,7 @@ using SharpEngine.Components;
 using SharpEngine.Managers;
 using SharpEngine.Utils;
 using SharpEngine.Utils.Math;
+using WarriorSurvivor.Entity;
 using WarriorSurvivor.Scene;
 
 namespace WarriorSurvivor;
@@ -20,8 +21,17 @@ internal static class Program
                 {
                     ImGui.Begin("Warrior Survivor Information");
                     ImGui.Text($"Current Scene : {win.IndexCurrentScene}");
-                    ImGui.Separator();
-                    ImGui.Text($"Player Coords : {(win.IndexCurrentScene == 1 ? win.CurrentScene.GetEntities()[1].GetComponent<TransformComponent>().Position : "Nop")}");
+                    if (win.IndexCurrentScene == 1)
+                    {
+                        ImGui.Separator();
+                        ImGui.Text(
+                            $"Player Coords : {win.CurrentScene.GetEntities()[1].GetComponent<TransformComponent>().Position}");
+                        ImGui.Text($"Camera Corner 0 : {((Game)win.CurrentScene).GetCameraCorners()[0]}");
+                        ImGui.Text($"Camera Corner 2 : {((Game)win.CurrentScene).GetCameraCorners()[2]}");
+                        ImGui.Text($"Map Corner 0 : {((Map)win.CurrentScene.GetEntities()[0]).GetCorners()[0]}");
+                        ImGui.Text($"Map Corner 2 : {((Map)win.CurrentScene.GetEntities()[0]).GetCorners()[2]}");
+                    }
+
                     ImGui.End();
                 }
             }
