@@ -18,11 +18,11 @@ public class EnemyMoverComponent: SharpEngine.Components.Component
     {
         base.Update(gameTime);
 
-        var transform = GetEntity().GetComponent<TransformComponent>();
+        var physics = GetEntity().GetComponent<PhysicsComponent>();
         
         var position = ((Game)GetEntity().GetScene()).Player.GetComponent<TransformComponent>().Position;
-        var direction = (position - transform.Position).Normalized();
+        var direction = (position - physics.GetPosition()).Normalized();
 
-        transform.Position += direction * _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        physics.SetLinearVelocity(direction * _speed);
     }
 }
