@@ -6,10 +6,14 @@ namespace WarriorSurvivor.Scene;
 
 public class Game: SharpEngine.Scene
 {
+    public readonly Player Player;
+    
     public Game()
     {
         AddEntity(new Map());
-        CameraManager.FollowEntity = AddEntity(new Player());
+        Player = AddEntity(new Player());
+        
+        CameraManager.FollowEntity = Player;
     }
 
     public Vec2[] GetCameraCorners()
