@@ -55,6 +55,7 @@ internal static class Program
         
         win.AddScene(new MainMenu());
         win.AddScene(new Game());
+        win.AddScene(new GameMenu());
 
         win.IndexCurrentScene = 0;
         win.Run();

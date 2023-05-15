@@ -6,13 +6,20 @@ namespace WarriorSurvivor.Scene;
 
 public class Game: SharpEngine.Scene
 {
-    public readonly Player Player;
+    public Player Player = null!;
     
     public Game()
     {
-        AddEntity(new Map());
-        Player = AddEntity(new Player());
+        Init();
+    }
+
+    public void Init()
+    {
+        RemoveAllEntities();
         
+        AddEntity(new Map()).Initialize();
+        Player = AddEntity(new Player());
+        Player.Initialize();
         CameraManager.FollowEntity = Player;
     }
 
