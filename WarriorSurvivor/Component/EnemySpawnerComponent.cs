@@ -7,7 +7,7 @@ namespace WarriorSurvivor.Component;
 
 public class EnemySpawnerComponent: SharpEngine.Components.Component
 {
-    private double _timer = 0;
+    private double _timer;
     
     public override void Update(GameTime gameTime)
     {
@@ -32,14 +32,13 @@ public class EnemySpawnerComponent: SharpEngine.Components.Component
             {
                 Stats = new Stats
                 {
-                    Attack = 3,
-                    Defense = 0,
+                    Attack = 1,
                     Life = 10,
                     Speed = 200
                 },
                 Life = 10,
                 Sprite = "player"
-            }));
+            })).Initialize();
         }
     }
 }
