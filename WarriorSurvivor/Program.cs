@@ -22,12 +22,12 @@ internal static class Program
                     ImGui.Begin("Warrior Survivor Information");
                     ImGui.Text($"Current Scene : {win.IndexCurrentScene}");
                     ImGui.Separator();
-                    if (WS.PlayerManager.Save != null && ImGui.TreeNode("Save Informations"))
+                    if (WS.SaveManager.Save != null && ImGui.TreeNode("Save Informations"))
                     {
-                        ImGui.Text($"PlayerData Stats : {WS.PlayerManager.PlayerData.Stats}");
-                        ImGui.Text($"Player Active Weapon : {WS.PlayerManager.PlayerData.ActiveWeapon}");
+                        ImGui.Text($"PlayerData Stats : {WS.PlayerData.Stats}");
+                        ImGui.Text($"Player Active Weapon : {WS.PlayerData.ActiveWeapon}");
                         for(var i = 0; i < 5; i++)
-                            ImGui.Text($"Player Passive Weapon {i} : {WS.PlayerManager.PlayerData.PassiveWeapons[i]}");
+                            ImGui.Text($"Player Passive Weapon {i} : {WS.PlayerData.PassiveWeapons[i]}");
                         ImGui.TreePop();
                     }
                     if (win.IndexCurrentScene == 1 && ImGui.TreeNode("Game Informations"))

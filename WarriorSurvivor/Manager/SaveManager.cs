@@ -3,9 +3,8 @@ using WarriorSurvivor.Data;
 
 namespace WarriorSurvivor.Manager;
 
-public class PlayerManager
+public class SaveManager
 {
-    public PlayerData PlayerData = new();
     public Save? Save;
 
     public void Init()
@@ -17,10 +16,11 @@ public class PlayerManager
             { "stats_attack", Rand.GetRand(0, 3) },
             { "stats_defense", Rand.GetRand(0, 3) }
         });
-        PlayerData.Stats = Stats.FromSave(Save, "stats");
-        PlayerData.ActiveWeapon = WeaponData.FromSave(Save, "weapon");
+        WS.PlayerData.Stats = Stats.FromSave(Save, "stats");
+        WS.PlayerData.Life = Save.GetObjectAs("life", WS.PlayerData.Life);
+        WS.PlayerData.ActiveWeapon = WeaponData.FromSave(Save, "weapon");
         for (var i = 0; i < 5; i++)
-            PlayerData.PassiveWeapons[i] = WeaponData.FromSave(Save, $"weapon_{i}");
+            WS.PlayerData.PassiveWeapons[i] = WeaponData.FromSave(Save, $"weapon_{i}");
     }
 
     public void Reset()
@@ -35,17 +35,18 @@ public class PlayerManager
         if(Save == null)
             return;
         
-        PlayerData.Stats.ToSave(Save, "stats");
-        if (PlayerData.ActiveWeapon == null)
+        WS.PlayerData.Stats.ToSave(Save, "stats");
+        Save.SetObject("life", WS.PlayerData.Stats.Life);
+        if (WS.PlayerData.ActiveWeapon == null)
             Save.SetObject("weapon", false);
         else
-            PlayerData.ActiveWeapon?.ToSave(Save, "weapon");
+            WS.PlayerData.ActiveWeapon?.ToSave(Save, "weapon");
         for (var i = 0; i < 5; i++)
         {
-            if(PlayerData.PassiveWeapons[i] == null)
+            if(WS.PlayerData.PassiveWeapons[i] == null)
                 Save.SetObject($"weapon_{i}", false);
             else
-                PlayerData.PassiveWeapons[i]?.ToSave(Save, $"weapon_{i}");
+                WS.PlayerData.PassiveWeapons[i]?.ToSave(Save, $"weapon_{i}");
         }
         Save.Write("Resource/save.wssave");
     }
