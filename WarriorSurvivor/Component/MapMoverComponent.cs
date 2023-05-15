@@ -7,9 +7,6 @@ namespace WarriorSurvivor.Component;
 
 public class MapMoverComponent: SharpEngine.Components.Component
 {
-    public MapMoverComponent()
-    {}
-
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
