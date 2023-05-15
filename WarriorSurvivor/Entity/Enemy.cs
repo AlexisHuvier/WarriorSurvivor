@@ -17,6 +17,7 @@ public class Enemy: SharpEngine.Entities.Entity
         AddComponent(new TransformComponent(position));
         AddComponent(new SpriteComponent(data.Sprite));
         AddComponent(new EnemyMoverComponent(data));
+        AddComponent(new LifeBarComponent());
         var phys = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
         phys.AddRectangleCollision(new Vec2(50));
         phys.CollisionCallback = (_, other, _) =>

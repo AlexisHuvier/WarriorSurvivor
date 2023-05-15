@@ -12,6 +12,7 @@ public class Player: SharpEngine.Entities.Entity
         AddComponent(new TransformComponent(new Vec2(600, 450)));
         AddComponent(new SpriteComponent("player"));
         AddComponent(new ControlComponent(ControlType.FourDirection));
+        AddComponent(new LifeBarComponent());
         AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true)).AddRectangleCollision(new Vec2(50));
     }
 }
