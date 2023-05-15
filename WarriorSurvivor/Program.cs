@@ -24,7 +24,8 @@ internal static class Program
                     ImGui.Separator();
                     if (WS.SaveManager.Save != null && ImGui.TreeNode("Save Informations"))
                     {
-                        ImGui.Text($"PlayerData Stats : {WS.PlayerData.Stats}");
+                        ImGui.Text($"PLayer Life :  {WS.PlayerData.Life}");
+                        ImGui.Text($"Player Stats : {WS.PlayerData.Stats}");
                         ImGui.Text($"Player Active Weapon : {WS.PlayerData.ActiveWeapon}");
                         for(var i = 0; i < 5; i++)
                             ImGui.Text($"Player Passive Weapon {i} : {WS.PlayerData.PassiveWeapons[i]}");
@@ -32,6 +33,7 @@ internal static class Program
                     }
                     if (win.IndexCurrentScene == 1 && ImGui.TreeNode("Game Informations"))
                     {
+                        ImGui.Text($"Enemy Count : {win.CurrentScene.GetEntities().Count - 2}");
                         ImGui.Text(
                             $"Player Coords : {win.CurrentScene.GetEntities()[1].GetComponent<TransformComponent>().Position}");
                         ImGui.Text($"Camera Corner 0 : {((Game)win.CurrentScene).GetCameraCorners()[0]}");
