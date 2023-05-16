@@ -1,4 +1,3 @@
-using System.Drawing;
 using SharpEngine.Components;
 using SharpEngine.Core;
 using SharpEngine.Managers;
@@ -21,9 +20,9 @@ public class LifeBarComponent: SharpEngine.Components.Component
         var position = GetEntity().GetComponent<TransformComponent>().Position + _offset - CameraManager.Position;
 
         var blankTexture = GetWindow().TextureManager.GetTexture("blank");
-        Renderer.RenderTexture(GetWindow(), blankTexture, new Rect(position - _size / 2, _size), Color.Black);
-        Renderer.RenderTexture(GetWindow(), blankTexture, new Rect(position - new Vec2((_size.X - 4) / 2, (_size.Y - 4) / 2), new Vec2(_size.X - 4, _size.Y - 4)), Color.White);
+        Renderer.RenderTexture(GetWindow(), blankTexture, new Rect(position - _size / 2, _size), Color.Black, .5f);
+        Renderer.RenderTexture(GetWindow(), blankTexture, new Rect(position - new Vec2((_size.X - 4) / 2, (_size.Y - 4) / 2), new Vec2(_size.X - 4, _size.Y - 4)), Color.White, .50001f);
         var barSize = new Vec2((_size.X - 8) * Value / 100, _size.Y - 8);
-        Renderer.RenderTexture(GetWindow(), blankTexture, new Rect(position - new Vec2(_size.X - 8, _size.Y - 8) / 2, barSize), Color.Green);
+        Renderer.RenderTexture(GetWindow(), blankTexture, new Rect(position - new Vec2(_size.X - 8, _size.Y - 8) / 2, barSize), Color.Green, .50002f);
     }
 }

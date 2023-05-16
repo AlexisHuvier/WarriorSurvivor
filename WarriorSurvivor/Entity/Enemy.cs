@@ -16,7 +16,7 @@ public class Enemy: SharpEngine.Entities.Entity
     {
         Data = data;
 
-        AddComponent(new TransformComponent(position));
+        AddComponent(new TransformComponent(position, zLayer: 10));
         AddComponent(new SpriteComponent(data.Sprite));
         AddComponent(new EnemyMoverComponent(data));
         AddComponent(new LifeBarComponent());
