@@ -24,5 +24,19 @@ public class EnemyMoverComponent: SharpEngine.Components.Component
         var direction = (position - physics.GetPosition()).Normalized();
 
         physics.SetLinearVelocity(direction * _speed);
+        
+        var anim = GetEntity().GetComponent<AnimSpriteSheetComponent>();
+
+        anim.FlipX = direction.X switch
+        {
+            < 0 => true,
+            > 0 => false,
+            _ => anim.FlipX
+        };
+
+        if (direction == Vec2.Zero && anim.Anim == "walk")
+            anim.Anim = "idle";
+        else if (direction != Vec2.Zero && anim.Anim == "idle")
+            anim.Anim = "walk";
     }
 }

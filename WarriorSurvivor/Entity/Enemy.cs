@@ -1,4 +1,5 @@
 using SharpEngine.Components;
+using SharpEngine.Utils;
 using SharpEngine.Utils.Math;
 using WarriorSurvivor.Component;
 using WarriorSurvivor.Data;
@@ -16,8 +17,12 @@ public class Enemy: SharpEngine.Entities.Entity
     {
         Data = data;
 
-        AddComponent(new TransformComponent(position, zLayer: 10));
-        AddComponent(new SpriteComponent(data.Sprite));
+        AddComponent(new TransformComponent(position, new Vec2(3), zLayer: 10));
+        AddComponent(new AnimSpriteSheetComponent(data.Sprite, new Vec2(18, 25), new List<Animation>
+        {
+            new("idle", new List<uint> { 0, 1, 2, 3 }, 250f),
+            new("walk", new List<uint> { 4, 5, 6, 7 }, 100f)
+        }, "idle"));
         AddComponent(new EnemyMoverComponent(data));
         AddComponent(new LifeBarComponent());
         var phys = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
