@@ -22,7 +22,7 @@ internal static class Program
                     ImGui.Begin("Warrior Survivor Information");
                     ImGui.Text($"Current Scene : {win.IndexCurrentScene}");
                     ImGui.Separator();
-                    if (WS.SaveManager.Save != null && ImGui.TreeNode("Save Informations"))
+                    if (WS.SaveManager.Save != null && ImGui.TreeNode("Save Information"))
                     {
                         ImGui.Text($"PLayer Life :  {WS.PlayerData.Life}");
                         ImGui.Text($"Player Stats : {WS.PlayerData.Stats}");
@@ -31,7 +31,13 @@ internal static class Program
                             ImGui.Text($"Player Passive Weapon {i} : {WS.PlayerData.PassiveWeapons[i]}");
                         ImGui.TreePop();
                     }
-                    if (win.IndexCurrentScene == 1 && ImGui.TreeNode("Game Informations"))
+
+                    if (win.IndexCurrentScene == 2 && ImGui.TreeNode("GameMenu Information"))
+                    {
+                        ImGui.Text($"Frame Position : {win.CurrentScene.GetWidgets()[0].GetChildren()[0].GetRealPosition()}");
+                        ImGui.TreePop();
+                    }
+                    if (win.IndexCurrentScene == 1 && ImGui.TreeNode("Game Information"))
                     {
                         ImGui.Text($"Enemy Count : {win.CurrentScene.GetEntities().Count - 2}");
                         ImGui.Text(
@@ -53,8 +59,8 @@ internal static class Program
         win.FontManager.AddFont("small", "Resource/Fonts/basic.ttf", 35);
         
         win.TextureManager.AddTexture("player", "Resource/Sprites/KnightM.png");
-        win.TextureManager.AddTexture("bg", "Resource/Sprites/warrior_bg.png");
-        win.TextureManager.AddTexture("test", "Resource/Sprites/test.png");
+        win.TextureManager.AddTexture("bg", "Resource/Sprites/BG.png");
+        win.TextureManager.AddTexture("enemy", "Resource/Sprites/Orc.png");
         
         win.AddScene(new MainMenu());
         win.AddScene(new Game());
