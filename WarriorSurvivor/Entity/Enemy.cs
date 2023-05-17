@@ -26,7 +26,7 @@ public class Enemy: SharpEngine.Entities.Entity
         AddComponent(new EnemyMoverComponent(data));
         AddComponent(new LifeBarComponent());
         var phys = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
-        phys.AddRectangleCollision(new Vec2(50));
+        phys.AddRectangleCollision(new Vec2(40));
         phys.CollisionCallback = (_, other, _) =>
         {
             var player = ((Game)GetScene()).Player;

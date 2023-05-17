@@ -21,7 +21,8 @@ public class Player: SharpEngine.Entities.Entity
         }, "idle"));
         AddComponent(new ControlComponent(ControlType.FourDirection));
         AddComponent(new LifeBarComponent());
-        AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true)).AddRectangleCollision(new Vec2(50));
+        var physics = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
+        physics.AddRectangleCollision(new Vec2(40));
     }
 
     public override void Update(GameTime gameTime)
