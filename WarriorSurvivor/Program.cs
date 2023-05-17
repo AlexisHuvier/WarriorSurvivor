@@ -52,8 +52,9 @@ internal static class Program
         win.FontManager.AddFont("medium", "Resource/Fonts/basic.ttf", 50);
         win.FontManager.AddFont("small", "Resource/Fonts/basic.ttf", 35);
         
-        win.TextureManager.AddTexture("player", "Resource/Sprites/test.png");
+        win.TextureManager.AddTexture("player", "Resource/Sprites/KnightM.png");
         win.TextureManager.AddTexture("bg", "Resource/Sprites/warrior_bg.png");
+        win.TextureManager.AddTexture("test", "Resource/Sprites/test.png");
         
         win.AddScene(new MainMenu());
         win.AddScene(new Game());

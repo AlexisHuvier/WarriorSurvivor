@@ -37,7 +37,7 @@ public class EnemySpawnerComponent: SharpEngine.Components.Component
                     Speed = 200
                 },
                 Life = 10,
-                Sprite = "player"
+                Sprite = "test"
             })).Initialize();
         }
     }
