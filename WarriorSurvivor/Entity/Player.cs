@@ -22,7 +22,7 @@ public class Player: SharpEngine.Entities.Entity
         AddComponent(new ControlComponent(ControlType.FourDirection));
         AddComponent(new LifeBarComponent());
         var physics = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
-        physics.AddRectangleCollision(new Vec2(40));
+        physics.AddRectangleCollision(new Vec2(35, 40));
     }
 
     public override void Update(GameTime gameTime)
