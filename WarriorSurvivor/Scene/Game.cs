@@ -1,3 +1,4 @@
+using SharpEngine.Components;
 using SharpEngine.Managers;
 using SharpEngine.Utils.Math;
 using WarriorSurvivor.Entity;
@@ -7,6 +8,7 @@ namespace WarriorSurvivor.Scene;
 public class Game: SharpEngine.Scene
 {
     public Player Player = null!;
+    public readonly List<ExpPoint> ExpPoints = new();
     
     public Game()
     {
@@ -21,6 +23,13 @@ public class Game: SharpEngine.Scene
         Player = AddEntity(new Player());
         Player.Initialize();
         CameraManager.FollowEntity = Player;
+
+        for (var i = 0; i < 10; i++)
+        {
+            ExpPoints.Add(AddEntity(new ExpPoint(Player.GetComponent<TransformComponent>().Position + new Vec2(50 + 50 * i),
+                1)));
+            ExpPoints[^1].Initialize();
+        }
     }
 
     public Vec2[] GetCameraCorners()

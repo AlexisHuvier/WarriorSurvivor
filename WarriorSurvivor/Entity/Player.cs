@@ -3,6 +3,8 @@ using SharpEngine.Utils;
 using SharpEngine.Utils.Control;
 using SharpEngine.Utils.Math;
 using WarriorSurvivor.Component;
+using WarriorSurvivor.Data;
+using WarriorSurvivor.Scene;
 
 namespace WarriorSurvivor.Entity;
 
@@ -21,8 +23,21 @@ public class Player: SharpEngine.Entities.Entity
         }, "idle"));
         AddComponent(new ControlComponent(ControlType.FourDirection));
         AddComponent(new LifeBarComponent());
+        AddComponent(new ExpBarComponent());
         var physics = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
         physics.AddRectangleCollision(new Vec2(35, 40));
+        physics.CollisionCallback = (_, other, _) =>
+        {
+            foreach (var point in ((Game)GetScene()).ExpPoints.Where(point => point.GetComponent<PhysicsComponent>().Body == other.Body))
+            {
+                GetScene().RemoveEntity(point, true);
+                if(WS.PlayerData.AddExp(point.Value))
+                    Console.WriteLine("NEW PASSIVE WEAPON");
+                return false;
+            }
+
+            return true;
+        };
     }
 
     public override void Update(GameTime gameTime)

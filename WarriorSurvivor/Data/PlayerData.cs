@@ -4,6 +4,7 @@ public struct PlayerData
 {
     public Stats Stats;
     public int Life;
+    public int Exp = 0;
     public WeaponData? ActiveWeapon;
     public WeaponData?[] PassiveWeapons;
 
