@@ -37,7 +37,7 @@ public class SaveManager
             return;
         
         WS.PlayerData.Stats.ToSave(Save, "stats");
-        Save.SetObject("life", WS.PlayerData.Stats.Life);
+        Save.SetObject("life", WS.PlayerData.Life);
         if (WS.PlayerData.ActiveWeapon == null)
             Save.SetObject("weapon", false);
         else
