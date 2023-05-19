@@ -6,7 +6,6 @@ public struct WeaponData
 {
     public string Name;
     public Stats Stats;
-    public int Level = 1;
 
     public WeaponData(string name, Stats stats)
     {
@@ -18,10 +17,9 @@ public struct WeaponData
     {
         save.SetObject($"{prefix}", true);
         save.SetObject($"{prefix}_name", Name);
-        save.SetObject($"{prefix}_level", Level);
         Stats.ToSave(save, $"{prefix}_stats");
     }
-    public override string ToString() => $"[Name: {Name}, Level: {Level}, Stats: {Stats}]";
+    public override string ToString() => $"[Name: {Name}, Stats: {Stats}]";
     
     public static WeaponData? FromSave(Save save, string prefix)
     {
@@ -31,8 +29,7 @@ public struct WeaponData
         return new WeaponData
         {
             Name = save.GetObjectAs($"{prefix}_name", ""),
-            Stats = Stats.FromSave(save, $"{prefix}_stats"),
-            Level = save.GetObjectAs($"{prefix}_level", 1)
+            Stats = Stats.FromSave(save, $"{prefix}_stats")
         };
     }
 }

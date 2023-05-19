@@ -18,6 +18,7 @@ public struct PlayerData
     public void Reset()
     {
         Life = Stats.Life;
+        Stats.Level = 1;
         ActiveWeapon = null;
         PassiveWeapons = new WeaponData?[] { null, null, null, null, null };
     }

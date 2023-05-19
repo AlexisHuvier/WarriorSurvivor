@@ -17,6 +17,7 @@ public class SaveManager
             { "stats_defense", Rand.GetRand(0, 3) }
         });
         WS.PlayerData.Stats = Stats.FromSave(Save, "stats");
+        WS.PlayerData.Stats.Level = 1;
         WS.PlayerData.Life = Save.GetObjectAs("life", WS.PlayerData.Life);
         WS.PlayerData.ActiveWeapon = WeaponData.FromSave(Save, "weapon");
         for (var i = 0; i < 5; i++)
