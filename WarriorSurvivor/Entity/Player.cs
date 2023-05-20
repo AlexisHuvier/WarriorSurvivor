@@ -28,10 +28,10 @@ public class Player: SharpEngine.Entities.Entity
         physics.AddRectangleCollision(new Vec2(35, 40));
         physics.CollisionCallback = (_, other, _) =>
         {
-            foreach (var point in ((Game)GetScene()).ExpPoints.Where(point => point.GetComponent<PhysicsComponent>().Body == other.Body))
+            if(GetScene<Game>().ExpPoints.FirstOrDefault(e => e.GetComponent<PhysicsComponent>().Body == other.Body) is { } expPoint)
             {
-                GetScene().RemoveEntity(point, true);
-                if(WS.PlayerData.AddExp(point.Value))
+                GetScene<Game>().RemoveExpPoint(expPoint);
+                if(WS.PlayerData.AddExp(expPoint.Value))
                     Console.WriteLine("NEW PASSIVE WEAPON");
                 return false;
             }

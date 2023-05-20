@@ -26,11 +26,21 @@ public class Game: SharpEngine.Scene
         CameraManager.FollowEntity = Player;
 
         for (var i = 0; i < 10; i++)
-        {
-            ExpPoints.Add(AddEntity(new ExpPoint(Player.GetComponent<TransformComponent>().Position + new Vec2(50 + 50 * i),
-                1)));
-            ExpPoints[^1].Initialize();
-        }
+            AddExpPoint(new ExpPoint(Player.GetComponent<TransformComponent>().Position + new Vec2(50 + 50 * i),
+                1));
+    }
+
+    public void AddExpPoint(ExpPoint point)
+    {
+        ExpPoints.Add(AddEntity(point));
+        point.Initialize();
+    }
+
+    public void RemoveExpPoint(ExpPoint point)
+    {
+        RemoveEntity(point, true);
+        ExpPoints.Remove(point);
+    }
 
     public void AddChest(Chest chest)
     {
