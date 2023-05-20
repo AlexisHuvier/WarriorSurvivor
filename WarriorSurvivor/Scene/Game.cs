@@ -9,6 +9,7 @@ public class Game: SharpEngine.Scene
 {
     public Player Player = null!;
     public readonly List<ExpPoint> ExpPoints = new();
+    public readonly List<Chest> Chests = new();
     
     public Game()
     {
@@ -30,6 +31,17 @@ public class Game: SharpEngine.Scene
                 1)));
             ExpPoints[^1].Initialize();
         }
+
+    public void AddChest(Chest chest)
+    {
+        Chests.Add(AddEntity(chest));
+        chest.Initialize();
+    }
+
+    public void RemoveChest(Chest chest)
+    {
+        RemoveEntity(chest, true);
+        Chests.Remove(chest);
     }
 
     public Vec2[] GetCameraCorners()

@@ -61,6 +61,7 @@ internal static class Program
         win.TextureManager.AddTexture("player", "Resource/Sprites/KnightM.png");
         win.TextureManager.AddTexture("bg", "Resource/Sprites/BG.png");
         win.TextureManager.AddTexture("enemy", "Resource/Sprites/Orc.png");
+        win.TextureManager.AddTexture("chest", "Resource/Sprites/Chest.png");
         
         win.AddScene(new MainMenu());
         win.AddScene(new Game());

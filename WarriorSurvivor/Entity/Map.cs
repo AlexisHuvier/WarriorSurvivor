@@ -17,7 +17,7 @@ public class Map: SharpEngine.Entities.Entity
         AddComponent(new SpriteComponent("bg", true, new Vec2(SpriteOffset.X, -SpriteOffset.Y)));
         AddComponent(new SpriteComponent("bg", true, new Vec2(-SpriteOffset.X, SpriteOffset.Y)));
         AddComponent(new MapMoverComponent());
-        AddComponent(new EnemySpawnerComponent());
+        AddComponent(new SpawnerComponent());
         CalculateCorners();
     }
 
