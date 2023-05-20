@@ -39,7 +39,9 @@ internal static class Program
                     }
                     if (win.IndexCurrentScene == 1 && ImGui.TreeNode("Game Information"))
                     {
-                        ImGui.Text($"Enemy Count : {win.CurrentScene.GetEntities().Count - 2}");
+                        var chests = win.CurrentScene.GetEntities().Where(x => x is Chest).ToList();
+                        ImGui.Text($"Chest Position : {(chests.Count > 0 ? chests[0].GetComponent<TransformComponent>().Position : "Nop")}");
+                        ImGui.Text($"Enemy Count : {win.CurrentScene.GetEntities().Count(x => x is Enemy)}");
                         ImGui.Text(
                             $"Player Coords : {win.CurrentScene.GetEntities()[1].GetComponent<TransformComponent>().Position}");
                         ImGui.Text($"Camera Corner 0 : {((Game)win.CurrentScene).GetCameraCorners()[0]}");
