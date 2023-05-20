@@ -13,7 +13,7 @@ public class MapMoverComponent: SharpEngine.Components.Component
 
         var transform = GetEntity().GetComponent<TransformComponent>();
         var corners = ((Map)GetEntity()).GetCorners();
-        var cameraCorners = ((Game)GetEntity().GetScene()).GetCameraCorners();
+        var cameraCorners = GetEntity().GetScene<Game>().GetCameraCorners();
         var temp = transform.Position;
 
         if (cameraCorners[0].X <= corners[0].X && cameraCorners[0].Y <= corners[0].Y)

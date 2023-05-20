@@ -20,7 +20,7 @@ public class EnemyMoverComponent: SharpEngine.Components.Component
 
         var physics = GetEntity().GetComponent<PhysicsComponent>();
         
-        var position = ((Game)GetEntity().GetScene()).Player.GetComponent<TransformComponent>().Position;
+        var position = GetEntity().GetScene<Game>().Player.GetComponent<TransformComponent>().Position;
         var direction = (position - physics.GetPosition()).Normalized();
 
         physics.SetLinearVelocity(direction * _speed);
