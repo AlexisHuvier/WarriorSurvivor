@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="SharpEngine" Version="0.18.1" />
+      <PackageReference Include="SharpEngine" Version="0.18.2" />
     </ItemGroup>
 
     <ItemGroup>
@@ -28,6 +28,18 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Resource\Sprites\Chest.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resource\Sprites\Weapons\icon-bottes_ailees.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resource\Sprites\Weapons\icon-null.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resource\Sprites\Weapons\icon-cristal_vie.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resource\Sprites\Weapons\icon-haltere.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
