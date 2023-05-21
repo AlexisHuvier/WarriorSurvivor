@@ -12,7 +12,7 @@ namespace WarriorSurvivor.Component;
 public class ExpDisplayComponent: SharpEngine.Components.Component
 {
     private static readonly Vec2 Size = new(25);
-    private int _rotation;
+    private float _rotation;
     
     public ExpDisplayComponent()
     { }
@@ -21,7 +21,7 @@ public class ExpDisplayComponent: SharpEngine.Components.Component
     {
         base.Update(gameTime);
         
-        _rotation++;
+        _rotation += (float)gameTime.ElapsedGameTime.TotalSeconds * 300;
     }
 
     public override void Draw(GameTime gameTime)
