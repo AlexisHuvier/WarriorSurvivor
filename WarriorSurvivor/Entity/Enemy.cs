@@ -53,7 +53,7 @@ public class Enemy: SharpEngine.Entities.Entity
             Data.Life -= damage;
             GetComponent<LifeBarComponent>().Value = (float)Data.Life * 100 / Data.Stats.Life;
 
-            if (Data.Life == 0)
+            if (Data.Life <= 0)
             {
                 WS.PlayerData.ModifyGold(-1);
                 GetScene<Game>().AddExpPoint(new ExpPoint(GetComponent<TransformComponent>().Position, Data.Stats.Level));

@@ -97,7 +97,7 @@ public class Player: SharpEngine.Entities.Entity
             var maxLife = WS.PlayerData.Stats.Life + WS.PlayerData.GetPassiveStats().Life;
             GetComponent<LifeBarComponent>().Value = (float)WS.PlayerData.Life * 100 / maxLife;
 
-            if (WS.PlayerData.Life == 0)
+            if (WS.PlayerData.Life <= 0)
             {
                 WS.PlayerData.Reset();
                 GetScene().GetWindow().IndexCurrentScene = 2;

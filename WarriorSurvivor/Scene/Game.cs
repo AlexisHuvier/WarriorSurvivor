@@ -57,6 +57,7 @@ public class Game: SharpEngine.Scene
         RemoveEntity(enemy, true);
         Enemies.Remove(enemy);
     }
+    
     public void AddExpPoint(ExpPoint point)
     {
         ExpPoints.Add(AddEntity(point));
