@@ -24,7 +24,17 @@ public struct Stats
         save.SetObject($"{prefix}_speed", Speed);
         save.SetObject($"{prefix}_attack", Attack);
     }
-    
+
+    public readonly Stats Multiply(int factor)
+    {
+        var result = this;
+        result.Level *= factor;
+        result.Life *= factor;
+        result.Speed *= factor;
+        result.Attack *= factor;
+        return result;
+    }
+
     public override string ToString() => $"[Level: {Level}, Life: {Life}, Speed: {Speed}, Attack: {Attack}]";
     
     public static Stats FromSave(Save save, string prefix)
