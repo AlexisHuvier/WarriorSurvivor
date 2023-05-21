@@ -94,7 +94,8 @@ public class Player: SharpEngine.Entities.Entity
                 GetScene().GetWindow().IndexCurrentScene = 2;
             }
 
-            _invincibility = 0.1;
+            if(damage > 0)
+                _invincibility = 0.1;
         }
     }
 }
