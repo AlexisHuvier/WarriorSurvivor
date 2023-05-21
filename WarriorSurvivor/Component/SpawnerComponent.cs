@@ -49,7 +49,7 @@ public class SpawnerComponent: SharpEngine.Components.Component
                 _ => Vec2.Zero
             };
 
-            GetEntity().GetScene().AddEntity(new Enemy(position, new EnemyData
+            GetEntity().GetScene<Game>().AddEnemy(new Enemy(position, new EnemyData
             {
                 Stats = new Stats
                 {
@@ -59,7 +59,7 @@ public class SpawnerComponent: SharpEngine.Components.Component
                 },
                 Life = 10,
                 Sprite = "enemy"
-            })).Initialize();
+            }));
         }
     }
 }

@@ -57,7 +57,7 @@ public class Enemy: SharpEngine.Entities.Entity
             {
                 WS.PlayerData.ModifyGold(-1);
                 GetScene<Game>().AddExpPoint(new ExpPoint(GetComponent<TransformComponent>().Position, Data.Stats.Level));
-                GetScene().RemoveEntity(this);
+                GetScene<Game>().RemoveEnemy(this);
             }
 
             _invincibility = 0.1;

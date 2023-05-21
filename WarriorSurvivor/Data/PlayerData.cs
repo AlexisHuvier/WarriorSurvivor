@@ -1,3 +1,5 @@
+using WarriorSurvivor.Data.DB;
+
 namespace WarriorSurvivor.Data;
 
 public struct PlayerData

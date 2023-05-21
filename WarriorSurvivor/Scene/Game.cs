@@ -10,6 +10,7 @@ namespace WarriorSurvivor.Scene;
 public class Game: SharpEngine.Scene
 {
     public Player Player = null!;
+    public readonly List<Enemy> Enemies = new();
     public readonly List<ExpPoint> ExpPoints = new();
     public readonly List<Chest> Chests = new();
 
@@ -44,6 +45,18 @@ public class Game: SharpEngine.Scene
         _goldLabel.Text = $"Or : {WS.PlayerData.Gold}";
     }
 
+
+    public void AddEnemy(Enemy enemy)
+    {
+        Enemies.Add(AddEntity(enemy));
+        enemy.Initialize();
+    }
+
+    public void RemoveEnemy(Enemy enemy)
+    {
+        RemoveEntity(enemy, true);
+        Enemies.Remove(enemy);
+    }
     public void AddExpPoint(ExpPoint point)
     {
         ExpPoints.Add(AddEntity(point));
