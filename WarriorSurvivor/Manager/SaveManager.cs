@@ -18,10 +18,9 @@ public class SaveManager
         });
         WS.PlayerData.Stats = Stats.FromSave(Save, "stats");
         WS.PlayerData.Stats.Level = 1;
-        WS.PlayerData.Life = Save.GetObjectAs("life", WS.PlayerData.Life);
-        WS.PlayerData.ActiveWeapon = WeaponData.FromSave(Save, "weapon");
-        for (var i = 0; i < 5; i++)
-            WS.PlayerData.PassiveWeapons[i] = WeaponData.FromSave(Save, $"weapon_{i}");
+        WS.PlayerData.Gold = Save.GetObjectAs("gold", 0);
+        WS.PlayerData.Reset();
+        
     }
 
     public void Reset()
@@ -37,18 +36,7 @@ public class SaveManager
             return;
         
         WS.PlayerData.Stats.ToSave(Save, "stats");
-        Save.SetObject("life", WS.PlayerData.Life);
-        if (WS.PlayerData.ActiveWeapon == null)
-            Save.SetObject("weapon", false);
-        else
-            WS.PlayerData.ActiveWeapon?.ToSave(Save, "weapon");
-        for (var i = 0; i < 5; i++)
-        {
-            if(WS.PlayerData.PassiveWeapons[i] == null)
-                Save.SetObject($"weapon_{i}", false);
-            else
-                WS.PlayerData.PassiveWeapons[i]?.ToSave(Save, $"weapon_{i}");
-        }
+        Save.SetObject("gold", WS.PlayerData.Gold);
         Save.Write("Resource/save.wssave");
     }
 }

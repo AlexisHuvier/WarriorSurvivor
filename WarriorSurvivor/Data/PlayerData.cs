@@ -3,6 +3,7 @@ namespace WarriorSurvivor.Data;
 public struct PlayerData
 {
     public Stats Stats;
+    public int Gold;
     public int Life;
     public int Exp = 0;
     public WeaponData? ActiveWeapon;
@@ -29,6 +30,14 @@ public struct PlayerData
         }
 
         return result;
+    }
+
+    public bool ModifyGold(int diff)
+    {
+        if (Gold < diff)
+            return false;
+        Gold -= diff;
+        return true;
     }
 
     public bool AddExp(int exp)

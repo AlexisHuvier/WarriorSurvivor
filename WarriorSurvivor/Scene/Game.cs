@@ -1,6 +1,7 @@
 using SharpEngine.Components;
 using SharpEngine.Managers;
 using SharpEngine.Utils.Math;
+using SharpEngine.Widgets;
 using WarriorSurvivor.Entity;
 
 namespace WarriorSurvivor.Scene;
@@ -10,9 +11,13 @@ public class Game: SharpEngine.Scene
     public Player Player = null!;
     public readonly List<ExpPoint> ExpPoints = new();
     public readonly List<Chest> Chests = new();
+
+    private readonly Label _goldLabel;
     
     public Game()
     {
+        _goldLabel = AddWidget(new Label(new Vec2(85, 130), "Or : 0", "small"));
+        _goldLabel.ZLayer = 4095;
         Init();
     }
 
@@ -28,6 +33,13 @@ public class Game: SharpEngine.Scene
         for (var i = 0; i < 10; i++)
             AddExpPoint(new ExpPoint(Player.GetComponent<TransformComponent>().Position + new Vec2(50 + 50 * i),
                 1));
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
+
+        _goldLabel.Text = $"Or : {WS.PlayerData.Gold}";
     }
 
     public void AddExpPoint(ExpPoint point)
