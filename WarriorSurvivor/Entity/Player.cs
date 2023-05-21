@@ -39,6 +39,18 @@ public class Player: SharpEngine.Entities.Entity
                         Data.DB.Weapon.Types["Cristal de Vie"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
                     WS.PlayerData.PassiveWeapons[2] = new WeaponData("Haltère",
                         Data.DB.Weapon.Types["Haltère"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
+                    WS.PlayerData.PassiveWeapons[3] = new WeaponData("Cercle de Feu",
+                        Data.DB.Weapon.Types["Cercle de Feu"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
+
+                    for (var i = 0; i < 4; i++)
+                    {
+                        var entityClass = Data.DB.Weapon.Types[WS.PlayerData.PassiveWeapons[i]!.Value.Name].GetEntity();
+                        if (entityClass is not null)
+                            GetScene<Game>()
+                                .SetPassiveWeapon((SharpEngine.Entities.Entity)Activator.CreateInstance(entityClass, WS.PlayerData.PassiveWeapons[i]!.Value)!,
+                                    i);
+                    }
+
                     TakeDamage(0);
                 }
 
