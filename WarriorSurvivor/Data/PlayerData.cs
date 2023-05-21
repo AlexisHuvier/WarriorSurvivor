@@ -16,6 +16,21 @@ public struct PlayerData
         Reset();
     }
 
+    public Stats GetPassiveStats()
+    {
+        var result = new Stats(0, 0, 0, 0);
+        foreach (var passiveWeapon in PassiveWeapons)
+        {
+            if (!passiveWeapon.HasValue) continue;
+            
+            result.Life += passiveWeapon.Value.Stats.Life;
+            result.Attack += passiveWeapon.Value.Stats.Attack;
+            result.Speed += passiveWeapon.Value.Stats.Speed;
+        }
+
+        return result;
+    }
+
     public bool AddExp(int exp)
     {
         Exp += exp;
@@ -32,7 +47,7 @@ public struct PlayerData
 
     public void Reset()
     {
-        Life = Stats.Life;
+        Life = Stats.Life + GetPassiveStats().Life;
         Stats.Level = 1;
         Exp = 0;
         ActiveWeapon = null;

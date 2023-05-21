@@ -9,6 +9,14 @@ public struct Stats
     public int Speed;
     public int Attack;
 
+    public Stats(int level, int life, int speed, int attack)
+    {
+        Level = level;
+        Life = life;
+        Speed = speed;
+        Attack = attack;
+    }
+
     public void ToSave(Save save, string prefix)
     {
         save.SetObject($"{prefix}_level", Level);

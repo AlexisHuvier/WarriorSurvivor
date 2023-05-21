@@ -58,6 +58,8 @@ public class Player: SharpEngine.Entities.Entity
         
         
         var control = GetComponent<ControlComponent>();
+        control.Speed = WS.PlayerData.Stats.Speed + WS.PlayerData.GetPassiveStats().Speed;
+
         var anim = GetComponent<AnimSpriteSheetComponent>();
 
         anim.FlipX = control.Direction.X switch
@@ -83,7 +85,8 @@ public class Player: SharpEngine.Entities.Entity
         if (_invincibility <= 0)
         {
             WS.PlayerData.Life -= damage;
-            GetComponent<LifeBarComponent>().Value = (float)WS.PlayerData.Life * 100 / WS.PlayerData.Stats.Life;
+            var maxLife = WS.PlayerData.Stats.Life + WS.PlayerData.GetPassiveStats().Life;
+            GetComponent<LifeBarComponent>().Value = (float)WS.PlayerData.Life * 100 / maxLife;
 
             if (WS.PlayerData.Life == 0)
             {
