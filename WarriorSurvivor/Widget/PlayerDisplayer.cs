@@ -8,32 +8,18 @@ public class PlayerDisplayer: SharpEngine.Widgets.Widget
 {
     public PlayerDisplayer(Vec2 position): base(position)
     {
-        AddChild(new Frame(Vec2.Zero, new Vec2(600, 500), new Vec2(5), Color.Black));
-        AddChild(new Image(new Vec2(0, -150), "player", null, new Rect(16, 0, 16, 28), false, false, new Vec2(4)));
-        AddChild(new Label(new Vec2(0, -30), $"Vie : {WS.PlayerData.Stats.Life}", "medium"));
-        AddChild(new Label(new Vec2(0, 20), $"Vitesse : {WS.PlayerData.Stats.Speed}", "medium"));
-        AddChild(new Label(new Vec2(0, 70), $"Attaque : {WS.PlayerData.Stats.Attack}", "medium"));
-        AddChild(new Label(new Vec2(0, 140), $"Arme active : {(WS.PlayerData.ActiveWeapon == null ? "Aucune" : WS.PlayerData.ActiveWeapon?.Name)}", "small"));
-        AddChild(new Label(new Vec2(0, 170), GetPassiveWeapons(), "small"));
+        UpdateInformation();
     }
 
-    private string GetPassiveWeapons()
+    public void UpdateInformation()
     {
-        var result = "Armes Passives : ";
-        var founded = false;
-        for (var i = 0; i < 5; i++)
-        {
-            if (WS.PlayerData.PassiveWeapons[i] == null) continue;
-            
-            result += WS.PlayerData.PassiveWeapons[i]?.Name + ", ";
-            founded = true;
-        }
-
-        if (!founded)
-            result += "Aucunes";
-        else
-            result = result.Substring(0, result.Length - 2);
-
-        return result;
+        RemoveAllChildren();
+        var passiveStats = WS.PlayerData.GetPassiveStats();
+        AddChild(new Frame(Vec2.Zero, new Vec2(800, 650), new Vec2(5), Color.Black));
+        AddChild(new Image(new Vec2(0, -275), "player", null, new Rect(16, 0, 16, 28), false, false, new Vec2(4)));
+        AddChild(new Label(new Vec2(0, -175), $"Vie : {WS.PlayerData.Stats.Life} (+{passiveStats.Life})", "medium"));
+        AddChild(new Label(new Vec2(0, -125), $"Vitesse : {WS.PlayerData.Stats.Speed} (+{passiveStats.Speed})", "medium"));
+        AddChild(new Label(new Vec2(0, -75), $"Attaque : {WS.PlayerData.Stats.Attack} (+{passiveStats.Attack})", "medium"));
+        AddChild(new Label(new Vec2(0, -25), $"Or : {WS.PlayerData.Gold}", "medium"));
     }
 }
