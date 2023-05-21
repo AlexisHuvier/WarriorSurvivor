@@ -31,8 +31,17 @@ public class Player: SharpEngine.Entities.Entity
             if(GetScene<Game>().ExpPoints.FirstOrDefault(e => e.GetComponent<PhysicsComponent>().Body == other.Body) is { } expPoint)
             {
                 GetScene<Game>().RemoveExpPoint(expPoint);
-                if(WS.PlayerData.AddExp(expPoint.Value))
-                    Console.WriteLine("NEW PASSIVE WEAPON");
+                if (WS.PlayerData.AddExp(expPoint.Value))
+                {
+                    WS.PlayerData.PassiveWeapons[0] = new WeaponData("Bottes Ailées",
+                        Data.DB.Weapon.Types["Bottes Ailées"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
+                    WS.PlayerData.PassiveWeapons[1] = new WeaponData("Cristal de Vie",
+                        Data.DB.Weapon.Types["Cristal de Vie"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
+                    WS.PlayerData.PassiveWeapons[2] = new WeaponData("Haltère",
+                        Data.DB.Weapon.Types["Haltère"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
+                    TakeDamage(0);
+                }
+
                 return false;
             }
 
