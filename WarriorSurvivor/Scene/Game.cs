@@ -13,7 +13,9 @@ public class Game: SharpEngine.Scene
     public readonly List<Enemy> Enemies = new();
     public readonly List<ExpPoint> ExpPoints = new();
     public readonly List<Chest> Chests = new();
-
+    
+    private SharpEngine.Entities.Entity? _activeWeapon;
+    private readonly SharpEngine.Entities.Entity?[] _passiveWeapons = { null, null, null, null, null };
     private readonly Label _goldLabel;
     
     public Game()
@@ -45,6 +47,35 @@ public class Game: SharpEngine.Scene
         _goldLabel.Text = $"Or : {WS.PlayerData.Gold}";
     }
 
+    public void SetActiveWeapon(SharpEngine.Entities.Entity? activeWeapon)
+    {
+        if(_activeWeapon is not null)
+            RemoveEntity(_activeWeapon, true);
+
+        if (activeWeapon is not null)
+        {
+            _activeWeapon = activeWeapon;
+            AddEntity(_activeWeapon);
+            _activeWeapon.Initialize();
+        }
+        else
+            _activeWeapon = null;
+    }
+
+    public void SetPassiveWeapon(SharpEngine.Entities.Entity? passiveWeapon, int index)
+    {
+        if(_passiveWeapons[index] is not null)
+            RemoveEntity(_passiveWeapons[index], true);
+
+        if (passiveWeapon is not null)
+        {
+            _passiveWeapons[index] = passiveWeapon;
+            AddEntity(_passiveWeapons[index]);
+            _passiveWeapons[index]?.Initialize();
+        }
+        else
+            _passiveWeapons[index] = null;
+    }
 
     public void AddEnemy(Enemy enemy)
     {
