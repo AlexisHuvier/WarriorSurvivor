@@ -65,6 +65,12 @@ internal static class Program
         win.TextureManager.AddTexture("enemy", "Resource/Sprites/Orc.png");
         win.TextureManager.AddTexture("chest", "Resource/Sprites/Chest.png");
         
+        // Weapons
+        win.TextureManager.AddTexture("weapon-null", "Resource/Sprites/Weapons/icon-null.png");
+        win.TextureManager.AddTexture("weapon-bottes_ailees", "Resource/Sprites/Weapons/icon-bottes_ailees.png");
+        win.TextureManager.AddTexture("weapon-cristal_vie", "Resource/Sprites/Weapons/icon-cristal_vie.png");
+        win.TextureManager.AddTexture("weapon-haltere", "Resource/Sprites/Weapons/icon-haltere.png");
+        
         win.AddScene(new MainMenu());
         win.AddScene(new Game());
         win.AddScene(new GameMenu());
