@@ -3,6 +3,7 @@ using SharpEngine.Managers;
 using SharpEngine.Utils.Math;
 using SharpEngine.Widgets;
 using WarriorSurvivor.Entity;
+using WarriorSurvivor.Widget;
 
 namespace WarriorSurvivor.Scene;
 
@@ -16,6 +17,7 @@ public class Game: SharpEngine.Scene
     
     public Game()
     {
+        AddWidget(new WeaponDisplayer(new Vec2(50, 60)));
         _goldLabel = AddWidget(new Label(new Vec2(85, 130), "Or : 0", "small"));
         _goldLabel.ZLayer = 4095;
         Init();
