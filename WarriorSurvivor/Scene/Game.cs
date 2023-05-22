@@ -1,9 +1,9 @@
 using SharpEngine.Components;
 using SharpEngine.Managers;
 using SharpEngine.Utils.Math;
-using SharpEngine.Widgets;
 using WarriorSurvivor.Entity;
 using WarriorSurvivor.Widget;
+using Timer = WarriorSurvivor.Widget.Timer;
 
 namespace WarriorSurvivor.Scene;
 
@@ -16,12 +16,12 @@ public class Game: SharpEngine.Scene
     
     private SharpEngine.Entities.Entity? _activeWeapon;
     private readonly SharpEngine.Entities.Entity?[] _passiveWeapons = { null, null, null, null, null };
-    private readonly Label _goldLabel;
+    private readonly GoldDisplayer _goldLabel;
     
     public Game()
     {
         AddWidget(new WeaponDisplayer(new Vec2(50, 60)));
-        _goldLabel = AddWidget(new Label(new Vec2(85, 130), "Or : 0", "small"));
+        _goldLabel = AddWidget(new GoldDisplayer(new Vec2(60, 140)));
         _goldLabel.ZLayer = 4095;
         Init();
     }
