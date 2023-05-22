@@ -69,6 +69,7 @@ internal static class Program
         win.TextureManager.AddTexture("weapon-cristal_vie", "Resource/Sprites/Weapons/icon-cristal_vie.png");
         win.TextureManager.AddTexture("weapon-haltere", "Resource/Sprites/Weapons/icon-haltere.png");
         win.TextureManager.AddTexture("weapon-cercle_feu", "Resource/Sprites/Weapons/icon-cercle_feu.png");
+        win.TextureManager.AddTexture("weapon-couteau", "Resource/Sprites/Weapons/icon-couteau.png");
         
         win.AddScene(new MainMenu());
         win.AddScene(new Game());

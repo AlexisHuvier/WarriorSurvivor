@@ -57,6 +57,21 @@ public class Game: SharpEngine.Scene
 
     public double GetPlayTime() => _timer.Time;
 
+    public Vec2? GetNearestEnemyPosition(int index = 0)
+    {
+        var enemy = new List<Enemy>(Enemies);
+        if (enemy.Count <= index)
+            return null;
+        enemy.Sort((enemy1, enemy2) =>
+        {
+            var playerPosition = Player.GetComponent<TransformComponent>().Position;
+            var enemy1Distance = (enemy1.GetComponent<TransformComponent>().Position - playerPosition).LengthSquared;
+            var enemy2Distance = (enemy2.GetComponent<TransformComponent>().Position - playerPosition).LengthSquared;
+            return enemy1Distance.CompareTo(enemy2Distance);
+        });
+        return enemy[index].GetComponent<TransformComponent>().Position;
+    }
+
     public void SetActiveWeapon(SharpEngine.Entities.Entity? activeWeapon)
     {
         if(_activeWeapon is not null)

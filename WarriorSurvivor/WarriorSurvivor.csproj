@@ -45,6 +45,9 @@
       <None Update="Resource\Sprites\Weapons\icon-cercle_feu.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Resource\Sprites\Weapons\icon-couteau.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>
