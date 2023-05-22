@@ -2,6 +2,8 @@ using SharpEngine.Components;
 using SharpEngine.Utils;
 using SharpEngine.Utils.Control;
 using SharpEngine.Utils.Math;
+using tainicom.Aether.Physics2D.Dynamics;
+using tainicom.Aether.Physics2D.Dynamics.Contacts;
 using WarriorSurvivor.Component;
 using WarriorSurvivor.Data;
 using WarriorSurvivor.Scene;
@@ -26,46 +28,44 @@ public class Player: SharpEngine.Entities.Entity
         AddComponent(new ExpBarComponent());
         var physics = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
         physics.AddRectangleCollision(new Vec2(35, 40));
-        physics.CollisionCallback = (_, other, _) =>
+        physics.CollisionCallback = PhysicsCollisionCallback;
+    }
+
+    private bool PhysicsCollisionCallback(Fixture fixture, Fixture other, Contact contact)
+    {
+        if (GetScene<Game>().ExpPoints.FirstOrDefault(e => e.GetComponent<PhysicsComponent>().Body == other.Body) is { } expPoint)
         {
-            if(GetScene<Game>().ExpPoints.FirstOrDefault(e => e.GetComponent<PhysicsComponent>().Body == other.Body) is { } expPoint)
+            GetScene<Game>().RemoveExpPoint(expPoint);
+            if (WS.PlayerData.AddExp(expPoint.Value))
             {
-                GetScene<Game>().RemoveExpPoint(expPoint);
-                if (WS.PlayerData.AddExp(expPoint.Value))
+                WS.PlayerData.PassiveWeapons[0] = new WeaponData("Bottes Ailées", Data.DB.Weapon.Types["Bottes Ailées"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
+                WS.PlayerData.PassiveWeapons[1] = new WeaponData("Cristal de Vie", Data.DB.Weapon.Types["Cristal de Vie"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
+                WS.PlayerData.PassiveWeapons[2] = new WeaponData("Haltère", Data.DB.Weapon.Types["Haltère"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
+                WS.PlayerData.PassiveWeapons[3] = new WeaponData("Cercle de Feu", Data.DB.Weapon.Types["Cercle de Feu"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
+                WS.PlayerData.PassiveWeapons[4] = new WeaponData("Couteau de Lancer", Data.DB.Weapon.Types["Couteau de Lancer"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
+
+                for (var i = 0; i < 5; i++)
                 {
-                    WS.PlayerData.PassiveWeapons[0] = new WeaponData("Bottes Ailées",
-                        Data.DB.Weapon.Types["Bottes Ailées"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
-                    WS.PlayerData.PassiveWeapons[1] = new WeaponData("Cristal de Vie",
-                        Data.DB.Weapon.Types["Cristal de Vie"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
-                    WS.PlayerData.PassiveWeapons[2] = new WeaponData("Haltère",
-                        Data.DB.Weapon.Types["Haltère"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
-                    WS.PlayerData.PassiveWeapons[3] = new WeaponData("Cercle de Feu",
-                        Data.DB.Weapon.Types["Cercle de Feu"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
-
-                    for (var i = 0; i < 4; i++)
-                    {
-                        var entityClass = Data.DB.Weapon.Types[WS.PlayerData.PassiveWeapons[i]!.Value.Name].GetEntity();
-                        if (entityClass is not null)
-                            GetScene<Game>()
-                                .SetPassiveWeapon((SharpEngine.Entities.Entity)Activator.CreateInstance(entityClass, WS.PlayerData.PassiveWeapons[i]!.Value)!,
-                                    i);
-                    }
-
-                    TakeDamage(0);
+                    var entityClass = Data.DB.Weapon.Types[WS.PlayerData.PassiveWeapons[i]!.Value.Name].GetEntity();
+                    if (entityClass is not null)
+                        GetScene<Game>()
+                            .SetPassiveWeapon((SharpEngine.Entities.Entity)Activator.CreateInstance(entityClass, WS.PlayerData.PassiveWeapons[i]!.Value)!, i);
                 }
 
-                return false;
+                TakeDamage(0);
             }
 
-            if(GetScene<Game>().Chests.FirstOrDefault(c => c.GetComponent<PhysicsComponent>().Body == other.Body) is { } chest)
-            {
-                GetScene<Game>().RemoveChest(chest);
-                Console.WriteLine("OPEN CHEST");
-                return false;
-            }
+            return false;
+        }
 
-            return true;
-        };
+        if (GetScene<Game>().Chests.FirstOrDefault(c => c.GetComponent<PhysicsComponent>().Body == other.Body) is { } chest)
+        {
+            GetScene<Game>().RemoveChest(chest);
+            Console.WriteLine("OPEN CHEST");
+            return false;
+        }
+
+        return true;
     }
 
     public override void Update(GameTime gameTime)

@@ -1,6 +1,8 @@
 using SharpEngine.Components;
 using SharpEngine.Utils;
 using SharpEngine.Utils.Math;
+using tainicom.Aether.Physics2D.Dynamics;
+using tainicom.Aether.Physics2D.Dynamics.Contacts;
 using WarriorSurvivor.Component;
 using WarriorSurvivor.Data;
 using WarriorSurvivor.Scene;
@@ -27,15 +29,17 @@ public class Enemy: SharpEngine.Entities.Entity
         AddComponent(new LifeBarComponent());
         var phys = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
         phys.AddRectangleCollision(new Vec2(35, 40));
-        phys.CollisionCallback = (_, other, _) =>
-        {
-            var player = ((Game)GetScene()).Player;
-            if (other.Body == player.GetComponent<PhysicsComponent>().Body)
-                player.TakeDamage(data.Stats.Attack);
-
-            return true;
-        };
+        phys.CollisionCallback = PhysCollisionCallback;
     }
+
+    private bool PhysCollisionCallback(Fixture fixture, Fixture other, Contact contact)
+    {
+        var player = ((Game)GetScene()).Player;
+        if (other.Body == player.GetComponent<PhysicsComponent>().Body) player.TakeDamage(Data.Stats.Attack);
+
+        return true;
+    }
+    
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);

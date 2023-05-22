@@ -2,6 +2,8 @@ using SharpEngine.Components;
 using SharpEngine.Utils;
 using SharpEngine.Utils.Math;
 using SharpEngine.Utils.Physic;
+using tainicom.Aether.Physics2D.Dynamics;
+using tainicom.Aether.Physics2D.Dynamics.Contacts;
 using WarriorSurvivor.Data;
 using Color = SharpEngine.Utils.Color;
 using Game = WarriorSurvivor.Scene.Game;
@@ -21,14 +23,7 @@ public class FireCircle: SharpEngine.Entities.Entity
         AddComponent(new TransformComponent(Vec2.Zero));
         var phys = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
         phys.AddRectangleCollision(new Vec2(30), tag: FixtureTag.IgnoreCollisions);
-        phys.CollisionCallback = (_, other, _) =>
-        {
-            if (GetScene<Game>().Enemies.FirstOrDefault(e => e.GetComponent<PhysicsComponent>().Body == other.Body) is
-                { } enemy)
-                enemy.TakeDamage(2 * _data.Stats.Level);
-
-            return false;
-        };
+        phys.CollisionCallback = PhysCollisionCallback;
         
         var particles = AddComponent(new ParticleComponent());
         
@@ -43,6 +38,13 @@ public class FireCircle: SharpEngine.Entities.Entity
                 active: true
             )
         );
+    }
+
+    private bool PhysCollisionCallback(Fixture fixture, Fixture other, Contact contact)
+    {
+        if (GetScene<Game>().Enemies.FirstOrDefault(e => e.GetComponent<PhysicsComponent>().Body == other.Body) is { } enemy) 
+            enemy.TakeDamage(2 * _data.Stats.Level);
+        return false;
     }
 
     private Vec2 CalculatePosition()
