@@ -17,10 +17,12 @@ public class Game: SharpEngine.Scene
     private SharpEngine.Entities.Entity? _activeWeapon;
     private readonly SharpEngine.Entities.Entity?[] _passiveWeapons = { null, null, null, null, null };
     private readonly GoldDisplayer _goldLabel;
+    private readonly Timer _timer;
     
     public Game()
     {
         AddWidget(new WeaponDisplayer(new Vec2(50, 60)));
+        _timer = AddWidget(new Timer(new Vec2(60, 110)));
         _goldLabel = AddWidget(new GoldDisplayer(new Vec2(60, 140)));
         _goldLabel.ZLayer = 4095;
         Init();
@@ -30,6 +32,8 @@ public class Game: SharpEngine.Scene
     {
         RemoveAllEntities();
         
+        _timer.Reset();
+
         AddEntity(new Map()).Initialize();
         Player = AddEntity(new Player());
         Player.Initialize();
@@ -46,6 +50,8 @@ public class Game: SharpEngine.Scene
 
         _goldLabel.Text = $"Or : {WS.PlayerData.Gold}";
     }
+
+    public double GetPlayTime() => _timer.Time;
 
     public void SetActiveWeapon(SharpEngine.Entities.Entity? activeWeapon)
     {
