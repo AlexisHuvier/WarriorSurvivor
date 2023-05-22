@@ -39,6 +39,10 @@ public class Game: SharpEngine.Scene
         Player.Initialize();
         CameraManager.FollowEntity = Player;
 
+        _activeWeapon = null;
+        for (var i = 0; i < 5; i++)
+            _passiveWeapons[i] = null;
+
         for (var i = 0; i < 10; i++)
             AddExpPoint(new ExpPoint(Player.GetComponent<TransformComponent>().Position + new Vec2(50 + 50 * i),
                 1));
@@ -77,7 +81,7 @@ public class Game: SharpEngine.Scene
         {
             _passiveWeapons[index] = passiveWeapon;
             AddEntity(_passiveWeapons[index]);
-            _passiveWeapons[index]?.Initialize();
+            _passiveWeapons[index]!.Initialize();
         }
         else
             _passiveWeapons[index] = null;
