@@ -4,6 +4,7 @@ using SharpEngine.Components;
 using SharpEngine.Managers;
 using SharpEngine.Utils;
 using SharpEngine.Utils.Math;
+using WarriorSurvivor.Component;
 using WarriorSurvivor.Entity;
 using WarriorSurvivor.Scene;
 
@@ -39,15 +40,12 @@ internal static class Program
                     }
                     if (win.IndexCurrentScene == 1 && ImGui.TreeNode("Game Information"))
                     {
-                        var chests = win.CurrentScene.GetEntities().Where(x => x is Chest).ToList();
+                        var chests = win.GetCurrentScene<Game>().Chests;
                         ImGui.Text($"Chest Position : {(chests.Count > 0 ? chests[0].GetComponent<TransformComponent>().Position : "Nop")}");
-                        ImGui.Text($"Enemy Count : {win.CurrentScene.GetEntities().Count(x => x is Enemy)}");
+                        ImGui.Text($"Enemy Timer : {((Map)win.CurrentScene.GetEntities()[0]).GetComponent<SpawnerComponent>().GetEnemyTimer()}");
+                        ImGui.Text($"Enemy Count : {win.GetCurrentScene<Game>().Enemies.Count}");
                         ImGui.Text(
                             $"Player Coords : {win.CurrentScene.GetEntities()[1].GetComponent<TransformComponent>().Position}");
-                        ImGui.Text($"Camera Corner 0 : {((Game)win.CurrentScene).GetCameraCorners()[0]}");
-                        ImGui.Text($"Camera Corner 2 : {((Game)win.CurrentScene).GetCameraCorners()[2]}");
-                        ImGui.Text($"Map Corner 0 : {((Map)win.CurrentScene.GetEntities()[0]).GetCorners()[0]}");
-                        ImGui.Text($"Map Corner 2 : {((Map)win.CurrentScene.GetEntities()[0]).GetCorners()[2]}");
                         ImGui.TreePop();
                     }
 

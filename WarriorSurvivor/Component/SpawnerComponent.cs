@@ -10,7 +10,15 @@ public class SpawnerComponent: SharpEngine.Components.Component
 {
     private double _enemyTimer;
     private double _chestTimer;
-    
+
+    public double GetEnemyTimer()
+    {
+        var currentPlayTime = GetEntity().GetScene<Game>().GetPlayTime();
+        if(currentPlayTime <= 300)
+            return -1.95 * currentPlayTime  / 300 + 2;
+        return 0.05;
+    }
+
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
@@ -35,7 +43,7 @@ public class SpawnerComponent: SharpEngine.Components.Component
             GetEntity().GetScene<Game>().AddChest(new Chest(position));
         }
         
-        if (_enemyTimer > 0.5)
+        if (_enemyTimer >= GetEnemyTimer() && GetEntity().GetScene<Game>().Enemies.Count <= WS.EnemyCount)
         {
             _enemyTimer = 0;
             var corners = ((Map)GetEntity()).GetCorners();
