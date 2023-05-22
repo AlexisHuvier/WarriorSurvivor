@@ -20,7 +20,7 @@ public class FireCircle: SharpEngine.Entities.Entity
 
         AddComponent(new TransformComponent(Vec2.Zero));
         var phys = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
-        phys.AddRectangleCollision(new Vec2(20), tag: FixtureTag.IgnoreCollisions);
+        phys.AddRectangleCollision(new Vec2(30), tag: FixtureTag.IgnoreCollisions);
         phys.CollisionCallback = (_, other, _) =>
         {
             if (GetScene<Game>().Enemies.FirstOrDefault(e => e.GetComponent<PhysicsComponent>().Body == other.Body) is
@@ -35,9 +35,9 @@ public class FireCircle: SharpEngine.Entities.Entity
         particles.AddEmitter(new ParticleEmitter(
                 new []{Color.Yellow},
                 new []{Color.Red},
-                minSize: 10, maxSize: 10, sizeFunction: ParticleParametersFunction.Decrease,
+                minSize: 20, maxSize: 20, sizeFunction: ParticleParametersFunction.Decrease,
                 minTimerBeforeSpawn: 0.1f, maxTimerBeforeSpawn: 0.1f,
-                minLifetime: 0.5f, maxLifetime: 0.5f,
+                minLifetime: 0.3f, maxLifetime: 0.3f,
                 minVelocity: 0f, maxVelocity: 0f,
                 spawnSize: new Vec2(15), 
                 active: true
