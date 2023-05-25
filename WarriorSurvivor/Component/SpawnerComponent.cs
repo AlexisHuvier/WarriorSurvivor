@@ -63,10 +63,10 @@ public class SpawnerComponent: SharpEngine.Components.Component
                 {
                     Level = 1,
                     Attack = 1,
-                    Life = 5,
+                    Life = 10,
                     Speed = 350
                 },
-                Life = 5,
+                Life = 10,
                 Sprite = "enemy"
             }));
         }
