@@ -1,6 +1,8 @@
 using SharpEngine.Components;
 using SharpEngine.Managers;
 using SharpEngine.Utils.Math;
+using WarriorSurvivor.Data;
+using WarriorSurvivor.Data.DB;
 using WarriorSurvivor.Entity;
 using WarriorSurvivor.Widget;
 using Timer = WarriorSurvivor.Widget.Timer;
@@ -13,8 +15,8 @@ public class Game: SharpEngine.Scene
     public readonly List<Enemy> Enemies = new();
     public readonly List<ExpPoint> ExpPoints = new();
     public readonly List<Chest> Chests = new();
+    public ActiveWeapon ActiveWeapon;
     
-    private SharpEngine.Entities.Entity? _activeWeapon;
     private readonly SharpEngine.Entities.Entity?[] _passiveWeapons = { null, null, null, null, null };
     private readonly GoldDisplayer _goldLabel;
     private readonly GainLevelDisplayer _gainLevelDisplayer;
@@ -40,13 +42,16 @@ public class Game: SharpEngine.Scene
         Player.Initialize();
         CameraManager.FollowEntity = Player;
 
-        _activeWeapon = null;
+        ActiveWeapon = AddEntity(new ActiveWeapon());
+        ActiveWeapon.Initialize();
         for (var i = 0; i < 5; i++)
             _passiveWeapons[i] = null;
 
         for (var i = 0; i < 10; i++)
             AddExpPoint(new ExpPoint(Player.GetComponent<TransformComponent>().Position + new Vec2(50 + 50 * i),
                 1));
+        
+        SetActiveWeapon(Weapon.ActiveWeapons["Couteau"]);
     }
 
     public override void Update(GameTime gameTime)
@@ -80,19 +85,17 @@ public class Game: SharpEngine.Scene
         return enemy[index].GetComponent<TransformComponent>().Position;
     }
 
-    public void SetActiveWeapon(SharpEngine.Entities.Entity? activeWeapon)
+    public void SetActiveWeapon(Weapon? weapon)
     {
-        if(_activeWeapon is not null)
-            RemoveEntity(_activeWeapon, true);
-
-        if (activeWeapon is not null)
-        {
-            _activeWeapon = activeWeapon;
-            AddEntity(_activeWeapon);
-            _activeWeapon.Initialize();
-        }
+        if(weapon == null)
+            ActiveWeapon.Init("", 1, new WeaponData());
         else
-            _activeWeapon = null;
+        {
+            ActiveWeapon.Init(weapon.Icon, weapon.Scale,
+                weapon.Name == ActiveWeapon.Data.Name
+                    ? new WeaponData(weapon.Name, weapon.BaseStats.Multiply(ActiveWeapon.Data.Stats.Level + 1))
+                    : new WeaponData(weapon.Name, weapon.BaseStats));
+        }
     }
 
     public void SetPassiveWeapon(SharpEngine.Entities.Entity? passiveWeapon, int index)

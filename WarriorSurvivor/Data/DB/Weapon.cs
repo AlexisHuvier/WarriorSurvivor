@@ -11,7 +11,6 @@ public class Weapon
     public readonly Stats BaseStats;
     public readonly float Scale; // USED ONLY ON ACTIVE WEAPONS
     public readonly string ClassName;
-    public readonly bool IsActive;
 
     private Weapon(string name, string icon, string description, Stats baseStats, string className, float scale = 1)
     {
@@ -53,5 +52,10 @@ public class Weapon
         { "Haltère", new Weapon("Haltère", "weapon-haltere", "Haltère sportive\najoutant de\nl'attaque", new Stats(1, 0, 0, 1), "") },
         { "Cercle de Feu", new Weapon("Cercle de Feu", "weapon-cercle_feu", "Boules de feu\nformant un\n cercle", new Stats(1, 0, 0, 0), "FireCircle") },
         { "Couteau de Lancer", new Weapon("Couteau de Lancer", "weapon-couteau", "Couteau qui se\n lance vers\nl'ennemi le plus\nproche", new Stats(1, 0, 0, 0), "KnifeSpawner")}
+    };
+
+    public static readonly Dictionary<string, Weapon> ActiveWeapons = new()
+    {
+        { "Couteau", new Weapon("Couteau", "weapon-couteau", "Couteau de combat basique", new Stats(1, 0, 0, 1), "", 0.75f) }
     };
 }
