@@ -64,7 +64,12 @@ public class Enemy: SharpEngine.Entities.Entity
                 GetScene<Game>().RemoveEnemy(this);
             }
 
-            _invincibility = 0.1;
+            if (damage > 0)
+            {
+                _invincibility = 0.1;
+                GetScene().AddEntity(new DamageDisplayer(GetComponent<TransformComponent>().Position, Color.DarkRed,
+                    damage.ToString())).Initialize();
+            }
         }
     }
 }
