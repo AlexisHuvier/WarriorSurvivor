@@ -23,29 +23,14 @@ internal static class Program
                     ImGui.Begin("Warrior Survivor Information");
                     ImGui.Text($"Current Scene : {win.IndexCurrentScene}");
                     ImGui.Separator();
-                    if (WS.SaveManager.Save != null && ImGui.TreeNode("Save Information"))
-                    {
-                        ImGui.Text($"PLayer Life :  {WS.PlayerData.Life}");
-                        ImGui.Text($"Player Stats : {WS.PlayerData.Stats}");
-                        ImGui.Text($"Player Active Weapon : {WS.PlayerData.ActiveWeapon}");
-                        for(var i = 0; i < 5; i++)
-                            ImGui.Text($"Player Passive Weapon {i} : {WS.PlayerData.PassiveWeapons[i]}");
-                        ImGui.TreePop();
-                    }
-
-                    if (win.IndexCurrentScene == 2 && ImGui.TreeNode("GameMenu Information"))
-                    {
-                        ImGui.Text($"Frame Position : {win.CurrentScene.GetWidgets()[0].GetChildren()[0].GetRealPosition()}");
-                        ImGui.TreePop();
-                    }
                     if (win.IndexCurrentScene == 1 && ImGui.TreeNode("Game Information"))
                     {
+                        ImGui.Text($"Active Weapon Speed : {win.GetCurrentScene<Game>().ActiveWeapon.MovingValue}");
+                        ImGui.Separator();
                         var chests = win.GetCurrentScene<Game>().Chests;
-                        ImGui.Text($"Chest Position : {(chests.Count > 0 ? chests[0].GetComponent<TransformComponent>().Position : "Nop")}");
+                        ImGui.Text($"Chest Pos : {(chests.Count > 0 ? chests[0].GetComponent<TransformComponent>().Position : "Nop")}");
                         ImGui.Text($"Enemy Timer : {((Map)win.CurrentScene.GetEntities()[0]).GetComponent<SpawnerComponent>().GetEnemyTimer()}");
                         ImGui.Text($"Enemy Count : {win.GetCurrentScene<Game>().Enemies.Count}");
-                        ImGui.Text(
-                            $"Player Coords : {win.CurrentScene.GetEntities()[1].GetComponent<TransformComponent>().Position}");
                         ImGui.TreePop();
                     }
 
