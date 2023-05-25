@@ -35,6 +35,7 @@ public class FireCircle: SharpEngine.Entities.Entity
                 minLifetime: 0.3f, maxLifetime: 0.3f,
                 minVelocity: 0f, maxVelocity: 0f,
                 spawnSize: new Vec2(15), 
+                active: true, zLayer: 3000
             )
         );
     }
