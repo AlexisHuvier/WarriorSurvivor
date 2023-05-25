@@ -3,7 +3,7 @@ using SharpEngine.Utils.Math;
 using WarriorSurvivor.Data;
 using WarriorSurvivor.Scene;
 
-namespace WarriorSurvivor.Entity.Weapon;
+namespace WarriorSurvivor.Entity.PassiveWeapon;
 
 public class KnifeSpawner: SharpEngine.Entities.Entity
 {

@@ -5,7 +5,7 @@ using tainicom.Aether.Physics2D.Dynamics;
 using tainicom.Aether.Physics2D.Dynamics.Contacts;
 using WarriorSurvivor.Scene;
 
-namespace WarriorSurvivor.Entity.Weapon;
+namespace WarriorSurvivor.Entity.PassiveWeapon;
 
 public class Knife: SharpEngine.Entities.Entity
 {

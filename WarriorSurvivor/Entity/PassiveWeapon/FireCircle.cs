@@ -1,6 +1,6 @@
 using SharpEngine.Components;
-using SharpEngine.Utils.Particle;
 using SharpEngine.Utils.Math;
+using SharpEngine.Utils.Particle;
 using SharpEngine.Utils.Physic;
 using tainicom.Aether.Physics2D.Dynamics;
 using tainicom.Aether.Physics2D.Dynamics.Contacts;
@@ -9,7 +9,7 @@ using Color = SharpEngine.Utils.Color;
 using Game = WarriorSurvivor.Scene.Game;
 using GameTime = SharpEngine.Utils.Math.GameTime;
 
-namespace WarriorSurvivor.Entity.Weapon;
+namespace WarriorSurvivor.Entity.PassiveWeapon;
 
 public class FireCircle: SharpEngine.Entities.Entity
 {
@@ -35,7 +35,6 @@ public class FireCircle: SharpEngine.Entities.Entity
                 minLifetime: 0.3f, maxLifetime: 0.3f,
                 minVelocity: 0f, maxVelocity: 0f,
                 spawnSize: new Vec2(15), 
-                active: true
             )
         );
     }
