@@ -17,6 +17,7 @@ public class Game: SharpEngine.Scene
     private SharpEngine.Entities.Entity? _activeWeapon;
     private readonly SharpEngine.Entities.Entity?[] _passiveWeapons = { null, null, null, null, null };
     private readonly GoldDisplayer _goldLabel;
+    private readonly GainLevelDisplayer _gainLevelDisplayer;
     private readonly Timer _timer;
     
     public Game()
@@ -24,7 +25,7 @@ public class Game: SharpEngine.Scene
         AddWidget(new WeaponDisplayer(new Vec2(50, 60)));
         _timer = AddWidget(new Timer(new Vec2(60, 110)));
         _goldLabel = AddWidget(new GoldDisplayer(new Vec2(60, 140)));
-        _goldLabel.ZLayer = 4095;
+        _gainLevelDisplayer = AddWidget(new GainLevelDisplayer());
         Init();
     }
 
@@ -56,6 +57,13 @@ public class Game: SharpEngine.Scene
     }
 
     public double GetPlayTime() => _timer.Time;
+
+    public void GainLevel()
+    {
+        _gainLevelDisplayer.Displayed = true;
+        _gainLevelDisplayer.Reset();
+        Paused = true;
+    }
 
     public Vec2? GetNearestEnemyPosition(int index = 0)
     {
@@ -100,6 +108,8 @@ public class Game: SharpEngine.Scene
         }
         else
             _passiveWeapons[index] = null;
+
+        Player.TakeDamage(0);
     }
 
     public void AddEnemy(Enemy enemy)

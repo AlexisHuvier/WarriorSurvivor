@@ -1,3 +1,4 @@
+using SharpEngine.Utils;
 using WarriorSurvivor.Data.DB;
 
 namespace WarriorSurvivor.Data;
@@ -17,6 +18,22 @@ public struct PlayerData
         
         Stats = new Stats();
         Reset();
+    }
+
+    public int GetNumberNullPassiveWeapon() => PassiveWeapons.Count(weapon => weapon == null);
+
+    public KeyValuePair<int, WeaponData> GetRandomNotNullPassiveWeapon()
+    {
+        var passiveWeapons = PassiveWeapons.Where(x => x.HasValue).ToList();
+        WeaponData? result = null;
+        var index = 0;
+        while (result == null)
+        {
+            index = Rand.GetRand(0, passiveWeapons.Count);
+            result = passiveWeapons[index];
+        }
+
+        return new KeyValuePair<int, WeaponData>(index, result.Value);
     }
 
     public Stats GetPassiveStats()
@@ -45,13 +62,12 @@ public struct PlayerData
     public bool AddExp(int exp)
     {
         Exp += exp;
-        if (Exp >= 1 + Stats.Level * 2)
-        {
-            Exp -= 1 + Stats.Level * 2;
-            Stats.Level++;
-            return true;
-        }
-        return false;
+        
+        if (Exp < 1 + Stats.Level * 2) return false;
+        
+        Exp -= 1 + Stats.Level * 2;
+        Stats.Level++;
+        return true;
     }
 
     public int GetExpToNextLevel() => 1 + Stats.Level * 2;

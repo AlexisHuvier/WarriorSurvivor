@@ -37,23 +37,7 @@ public class Player: SharpEngine.Entities.Entity
         {
             GetScene<Game>().RemoveExpPoint(expPoint);
             if (WS.PlayerData.AddExp(expPoint.Value))
-            {
-                WS.PlayerData.PassiveWeapons[0] = new WeaponData("Bottes Ailées", Data.DB.Weapon.Types["Bottes Ailées"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
-                WS.PlayerData.PassiveWeapons[1] = new WeaponData("Cristal de Vie", Data.DB.Weapon.Types["Cristal de Vie"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
-                WS.PlayerData.PassiveWeapons[2] = new WeaponData("Haltère", Data.DB.Weapon.Types["Haltère"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
-                WS.PlayerData.PassiveWeapons[3] = new WeaponData("Cercle de Feu", Data.DB.Weapon.Types["Cercle de Feu"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
-                WS.PlayerData.PassiveWeapons[4] = new WeaponData("Couteau de Lancer", Data.DB.Weapon.Types["Couteau de Lancer"].BaseStats.Multiply(WS.PlayerData.Stats.Level - 1));
-
-                for (var i = 0; i < 5; i++)
-                {
-                    var entityClass = Data.DB.Weapon.Types[WS.PlayerData.PassiveWeapons[i]!.Value.Name].GetEntity();
-                    if (entityClass is not null)
-                        GetScene<Game>()
-                            .SetPassiveWeapon((SharpEngine.Entities.Entity)Activator.CreateInstance(entityClass, WS.PlayerData.PassiveWeapons[i]!.Value)!, i);
-                }
-
-                TakeDamage(0);
-            }
+                GetScene<Game>().GainLevel();
 
             return false;
         }
