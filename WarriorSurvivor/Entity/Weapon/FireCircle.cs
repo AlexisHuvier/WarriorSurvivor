@@ -1,5 +1,5 @@
 using SharpEngine.Components;
-using SharpEngine.Utils;
+using SharpEngine.Utils.Particle;
 using SharpEngine.Utils.Math;
 using SharpEngine.Utils.Physic;
 using tainicom.Aether.Physics2D.Dynamics;
@@ -13,7 +13,7 @@ namespace WarriorSurvivor.Entity.Weapon;
 
 public class FireCircle: SharpEngine.Entities.Entity
 {
-    private WeaponData _data;
+    private readonly WeaponData _data;
     private float _rotation;
 
     public FireCircle(WeaponData data)
