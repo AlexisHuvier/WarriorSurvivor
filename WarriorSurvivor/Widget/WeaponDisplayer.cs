@@ -21,7 +21,7 @@ public class WeaponDisplayer: SharpEngine.Widgets.Widget
 
         Renderer.RenderTexture(GetWindow(),
             WS.PlayerData.ActiveWeapon.HasValue
-                ? textureManager.GetTexture(Weapon.Types[WS.PlayerData.ActiveWeapon.Value.Name].Icon)
+                ? textureManager.GetTexture(Weapon.PassiveWeapons[WS.PlayerData.ActiveWeapon.Value.Name].Icon)
                 : nullTexture, new Rect(Position, Size), Color.White, 1);
         Renderer.RenderTexture(GetWindow(), blankTexture, new Rect(Position.X + 51, Position.Y, 5, 48), Color.Black, 1);
         var nb = 0;
@@ -29,7 +29,7 @@ public class WeaponDisplayer: SharpEngine.Widgets.Widget
         {
             Renderer.RenderTexture(GetWindow(),
                 passiveWeapon.HasValue
-                    ? textureManager.GetTexture(Weapon.Types[passiveWeapon.Value.Name].Icon)
+                    ? textureManager.GetTexture(Weapon.PassiveWeapons[passiveWeapon.Value.Name].Icon)
                     : nullTexture, new Rect(59 + Position.X + 52 * nb, Position.Y, Size), Color.White, 1);
             nb++;
         }

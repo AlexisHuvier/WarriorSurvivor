@@ -51,7 +51,7 @@ public class GainLevelDisplayer: SharpEngine.Widgets.Widget
             case 0:
             {
                 var leftData = WS.PlayerData.GetRandomNotNullPassiveWeapon();
-                var leftWeapon = Weapon.Types[leftData.Value.Name];
+                var leftWeapon = Weapon.PassiveWeapons[leftData.Value.Name];
                 _leftTitle.Text = leftWeapon.Name;
                 _leftDescription.Text = leftWeapon.Description;
                 _leftButton.Command = _ =>
@@ -60,7 +60,7 @@ public class GainLevelDisplayer: SharpEngine.Widgets.Widget
                         leftData.Key);
 
                 var rightData = WS.PlayerData.GetRandomNotNullPassiveWeapon();
-                var rightWeapon = Weapon.Types[leftData.Value.Name];
+                var rightWeapon = Weapon.PassiveWeapons[leftData.Value.Name];
                 _rightTitle.Text = rightWeapon.Name;
                 _rightDescription.Text = rightWeapon.Description;
                 _rightButton.Command = _ => 
@@ -71,12 +71,12 @@ public class GainLevelDisplayer: SharpEngine.Widgets.Widget
             }
             case 5:
             {
-                var leftWeapon = Weapon.GetTypeWhichPlayerNotHave();
+                var leftWeapon = Weapon.GetPassiveWeaponWhichPlayerNotHave();
                 _leftTitle.Text = leftWeapon.Name;
                 _leftDescription.Text = leftWeapon.Description;
                 _leftButton.Command = _ => SetPassiveWeapon(new WeaponData(leftWeapon.Name, leftWeapon.BaseStats));
             
-                var rightWeapon = Weapon.GetTypeWhichPlayerNotHave();
+                var rightWeapon = Weapon.GetPassiveWeaponWhichPlayerNotHave();
                 _rightTitle.Text = rightWeapon.Name;
                 _rightDescription.Text = rightWeapon.Description;
                 _rightButton.Command = _ => SetPassiveWeapon(new WeaponData(rightWeapon.Name, rightWeapon.BaseStats));
@@ -85,7 +85,7 @@ public class GainLevelDisplayer: SharpEngine.Widgets.Widget
             default:
             {
                 var leftData = WS.PlayerData.GetRandomNotNullPassiveWeapon();
-                var leftWeapon = Weapon.Types[leftData.Value.Name];
+                var leftWeapon = Weapon.PassiveWeapons[leftData.Value.Name];
                 _leftTitle.Text = leftWeapon.Name;
                 _leftDescription.Text = leftWeapon.Description;
                 _leftButton.Command = _ =>
@@ -93,7 +93,7 @@ public class GainLevelDisplayer: SharpEngine.Widgets.Widget
                         new WeaponData(leftWeapon.Name, GetNextLevelStats(leftWeapon.BaseStats, leftData.Value.Stats)),
                         leftData.Key);
             
-                var rightWeapon = Weapon.GetTypeWhichPlayerNotHave();
+                var rightWeapon = Weapon.GetPassiveWeaponWhichPlayerNotHave();
                 _rightTitle.Text = rightWeapon.Name;
                 _rightDescription.Text = rightWeapon.Description;
                 _rightButton.Command = _ => SetPassiveWeapon(new WeaponData(rightWeapon.Name, rightWeapon.BaseStats));
@@ -124,7 +124,7 @@ public class GainLevelDisplayer: SharpEngine.Widgets.Widget
 
         WS.PlayerData.PassiveWeapons[nb] = data;
 
-        var entity = Weapon.Types[data.Name].GetEntity();
+        var entity = Weapon.PassiveWeapons[data.Name].GetEntity();
         if(entity is not null)
             GetScene<Game>().SetPassiveWeapon((SharpEngine.Entities.Entity)Activator.CreateInstance(entity, data)!, nb);
 
