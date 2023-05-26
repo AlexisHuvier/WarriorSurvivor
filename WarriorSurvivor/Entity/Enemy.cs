@@ -52,7 +52,7 @@ public class Enemy: SharpEngine.Entities.Entity
 
     public void TakeDamage(int damage)
     {
-        if (_invincibility <= 0)
+        if (_invincibility <= 0 || damage < 0)
         {
             Data.Life -= damage;
             GetComponent<LifeBarComponent>().Value = (float)Data.Life * 100 / Data.Stats.Life;
@@ -64,11 +64,17 @@ public class Enemy: SharpEngine.Entities.Entity
                 GetScene<Game>().RemoveEnemy(this);
             }
 
-            if (damage > 0)
+            switch (damage)
             {
-                _invincibility = 0.1;
-                GetScene().AddEntity(new DamageDisplayer(GetComponent<TransformComponent>().Position, Color.DarkRed,
-                    damage.ToString())).Initialize();
+                case > 0:
+                    _invincibility = 0.1;
+                    GetScene().AddEntity(new DamageDisplayer(GetComponent<TransformComponent>().Position, Color.DarkRed,
+                        damage.ToString())).Initialize();
+                    break;
+                case < 0:
+                    GetScene().AddEntity(new DamageDisplayer(GetComponent<TransformComponent>().Position, Color.Green,
+                        damage.ToString())).Initialize();
+                    break;
             }
         }
     }

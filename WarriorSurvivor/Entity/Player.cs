@@ -87,10 +87,14 @@ public class Player: SharpEngine.Entities.Entity
 
     public void TakeDamage(int damage)
     {
-        if (_invincibility <= 0)
+        if (_invincibility <= 0 || damage < 0)
         {
             WS.PlayerData.Life -= damage;
+            
             var maxLife = WS.PlayerData.Stats.Life + WS.PlayerData.GetPassiveStats().Life;
+            if (WS.PlayerData.Life > maxLife)
+                WS.PlayerData.Life = maxLife;
+            
             GetComponent<LifeBarComponent>().Value = (float)WS.PlayerData.Life * 100 / maxLife;
 
             if (WS.PlayerData.Life <= 0)
@@ -99,11 +103,17 @@ public class Player: SharpEngine.Entities.Entity
                 GetScene().GetWindow().IndexCurrentScene = 2;
             }
 
-            if (damage > 0)
+            switch (damage)
             {
-                _invincibility = 0.1;
-                GetScene().AddEntity(new DamageDisplayer(GetComponent<TransformComponent>().Position, Color.DarkRed,
-                    damage.ToString())).Initialize();
+                case > 0:
+                    _invincibility = 0.1;
+                    GetScene().AddEntity(new DamageDisplayer(GetComponent<TransformComponent>().Position, Color.DarkRed,
+                        damage.ToString())).Initialize();
+                    break;
+                case < 0:
+                    GetScene().AddEntity(new DamageDisplayer(GetComponent<TransformComponent>().Position, Color.Green,
+                        damage.ToString())).Initialize();
+                    break;
             }
         }
     }
