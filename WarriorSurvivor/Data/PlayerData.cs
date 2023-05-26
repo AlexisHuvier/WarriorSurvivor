@@ -66,6 +66,9 @@ public struct PlayerData
         
         Exp -= 1 + Stats.Level * 2;
         Stats.Level++;
+        if (Exp >= 1 + Stats.Level * 2)
+            Exp = Stats.Level * 2;
+        
         return true;
     }
 
