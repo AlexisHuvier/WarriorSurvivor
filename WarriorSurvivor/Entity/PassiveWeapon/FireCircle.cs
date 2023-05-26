@@ -15,15 +15,16 @@ public class FireCircle: SharpEngine.Entities.Entity
 {
     private readonly WeaponData _data;
     private float _rotation;
+    private readonly PhysicsComponent _physicsComponent;
 
     public FireCircle(WeaponData data)
     {
         _data = data;
 
         AddComponent(new TransformComponent(Vec2.Zero));
-        var phys = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
-        phys.AddRectangleCollision(new Vec2(30), tag: FixtureTag.IgnoreCollisions);
-        phys.CollisionCallback = PhysCollisionCallback;
+        _physicsComponent = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
+        _physicsComponent.AddRectangleCollision(new Vec2(30), tag: FixtureTag.IgnoreCollisions);
+        _physicsComponent.CollisionCallback = PhysCollisionCallback;
         
         var particles = AddComponent(new ParticleComponent());
         
@@ -62,6 +63,6 @@ public class FireCircle: SharpEngine.Entities.Entity
         base.Update(gameTime);
 
         _rotation += (float)gameTime.ElapsedGameTime.TotalSeconds * 200 * _data.Stats.Level;
-        GetComponent<PhysicsComponent>().SetPosition(CalculatePosition());
+        _physicsComponent.SetPosition(CalculatePosition());
     }
 }

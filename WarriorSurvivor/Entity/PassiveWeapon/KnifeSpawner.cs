@@ -13,7 +13,6 @@ public class KnifeSpawner: SharpEngine.Entities.Entity
     public KnifeSpawner(WeaponData data)
     {
         _data = data;
-        AddComponent(new TransformComponent(Vec2.Zero));
     }
 
     public override void Update(GameTime gameTime)

@@ -15,7 +15,7 @@ public class Game: SharpEngine.Scene
     public readonly List<Enemy> Enemies = new();
     public readonly List<ExpPoint> ExpPoints = new();
     public readonly List<Chest> Chests = new();
-    public ActiveWeapon ActiveWeapon;
+    public ActiveWeapon ActiveWeapon = null!;
     
     private readonly SharpEngine.Entities.Entity?[] _passiveWeapons = { null, null, null, null, null };
     private readonly GoldDisplayer _goldLabel;

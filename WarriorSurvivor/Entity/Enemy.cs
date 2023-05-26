@@ -11,22 +11,24 @@ namespace WarriorSurvivor.Entity;
 
 public class Enemy: SharpEngine.Entities.Entity
 {
-    public EnemyData Data;
+    public readonly EnemyData Data;
     
     private double _invincibility;
+    private readonly LifeBarComponent _lifeBarComponent;
+    private readonly TransformComponent _transformComponent;
 
     public Enemy(Vec2 position, EnemyData data)
     {
         Data = data;
 
-        AddComponent(new TransformComponent(position, new Vec2(3), zLayer: 10));
+        _transformComponent = AddComponent(new TransformComponent(position, new Vec2(3), zLayer: 10));
         AddComponent(new AnimSpriteSheetComponent(data.Sprite, new Vec2(18, 25), new List<Animation>
         {
             new("idle", new List<uint> { 0, 1, 2, 3 }, 250f),
             new("walk", new List<uint> { 4, 5, 6, 7 }, 100f)
         }, "idle"));
         AddComponent(new EnemyMoverComponent(data));
-        AddComponent(new LifeBarComponent());
+        _lifeBarComponent = AddComponent(new LifeBarComponent());
         var phys = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
         phys.AddRectangleCollision(new Vec2(35, 40));
         phys.CollisionCallback = PhysCollisionCallback;
@@ -55,12 +57,12 @@ public class Enemy: SharpEngine.Entities.Entity
         if (_invincibility <= 0 || damage < 0)
         {
             Data.Life -= damage;
-            GetComponent<LifeBarComponent>().Value = (float)Data.Life * 100 / Data.Stats.Life;
+            _lifeBarComponent.Value = (float)Data.Life * 100 / Data.Stats.Life;
 
             if (Data.Life <= 0)
             {
                 WS.PlayerData.ModifyGold(-1);
-                GetScene<Game>().AddExpPoint(new ExpPoint(GetComponent<TransformComponent>().Position, Data.Stats.Level));
+                GetScene<Game>().AddExpPoint(new ExpPoint(_transformComponent.Position, Data.Stats.Level));
                 GetScene<Game>().RemoveEnemy(this);
             }
 
@@ -68,11 +70,11 @@ public class Enemy: SharpEngine.Entities.Entity
             {
                 case > 0:
                     _invincibility = 0.1;
-                    GetScene().AddEntity(new DamageDisplayer(GetComponent<TransformComponent>().Position, Color.DarkRed,
+                    GetScene().AddEntity(new DamageDisplayer(_transformComponent.Position, Color.DarkRed,
                         damage.ToString())).Initialize();
                     break;
                 case < 0:
-                    GetScene().AddEntity(new DamageDisplayer(GetComponent<TransformComponent>().Position, Color.Green,
+                    GetScene().AddEntity(new DamageDisplayer(_transformComponent.Position, Color.Green,
                         damage.ToString())).Initialize();
                     break;
             }

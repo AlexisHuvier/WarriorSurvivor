@@ -8,10 +8,11 @@ public class Map: SharpEngine.Entities.Entity
 {
     private static readonly Vec2 SpriteOffset = new(640, 480);
     private readonly Vec2[] _corners = new Vec2[4];
+    private readonly TransformComponent _transformComponent;
 
     public Map()
     {
-        AddComponent(new TransformComponent(new Vec2(600, 450)));
+        _transformComponent = AddComponent(new TransformComponent(new Vec2(600, 450)));
         AddComponent(new SpriteComponent("bg", true, SpriteOffset));
         AddComponent(new SpriteComponent("bg", true, -SpriteOffset));
         AddComponent(new SpriteComponent("bg", true, new Vec2(SpriteOffset.X, -SpriteOffset.Y)));
@@ -23,12 +24,12 @@ public class Map: SharpEngine.Entities.Entity
 
     public void CalculateCorners()
     {
-        var position = GetComponent<TransformComponent>().Position;
+        var position = _transformComponent.Position;
 
-        _corners[0] = position - SpriteOffset * 2;
-        _corners[1] = position + new Vec2(SpriteOffset.X * 2, -SpriteOffset.Y * 2);
-        _corners[2] = position + SpriteOffset * 2;
-        _corners[3] = position + new Vec2(-SpriteOffset.X * 2, SpriteOffset.Y * 2);
+        _corners[0] = new Vec2(position.X - SpriteOffset.X * 2, position.Y - SpriteOffset.Y * 2);
+        _corners[1] = new Vec2(position.X + SpriteOffset.X * 2, position.Y - SpriteOffset.Y * 2);
+        _corners[2] = new Vec2(position.X + SpriteOffset.X * 2, position.Y + SpriteOffset.Y * 2);
+        _corners[3] = new Vec2(position.X - SpriteOffset.X * 2, position.Y + SpriteOffset.Y * 2);
     }
 
     public Vec2[] GetCorners() => _corners;

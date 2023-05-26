@@ -5,7 +5,6 @@ using SharpEngine.Utils.Math;
 using tainicom.Aether.Physics2D.Dynamics;
 using tainicom.Aether.Physics2D.Dynamics.Contacts;
 using WarriorSurvivor.Component;
-using WarriorSurvivor.Data;
 using WarriorSurvivor.Scene;
 
 namespace WarriorSurvivor.Entity;
@@ -13,18 +12,23 @@ namespace WarriorSurvivor.Entity;
 public class Player: SharpEngine.Entities.Entity
 {
     private double _invincibility;
-    
+
+    private readonly ControlComponent _controlComponent;
+    private readonly AnimSpriteSheetComponent _animSpriteSheetComponent;
+    private readonly TransformComponent _transformComponent;
+    private readonly LifeBarComponent _lifeBarComponent;
+
     public Player()
     {
-        AddComponent(new TransformComponent(new Vec2(600, 450), new Vec2(3), zLayer: 10));
-        AddComponent(new AnimSpriteSheetComponent("player", new Vec2(16, 28), new List<Animation>
+        _transformComponent = AddComponent(new TransformComponent(new Vec2(600, 450), new Vec2(3), zLayer: 10));
+        _animSpriteSheetComponent = AddComponent(new AnimSpriteSheetComponent("player", new Vec2(16, 28), new List<Animation>
         {
             new("die", new List<uint> { 0 }, 100f),
             new("idle", new List<uint> { 1, 2 }, 250f),
             new("walk", new List<uint> { 3, 4, 5, 6, 7, 8 }, 100f)
         }, "idle"));
-        AddComponent(new ControlComponent(ControlType.FourDirection));
-        AddComponent(new LifeBarComponent());
+        _controlComponent = AddComponent(new ControlComponent(ControlType.FourDirection));
+        _lifeBarComponent = AddComponent(new LifeBarComponent());
         AddComponent(new ExpBarComponent());
         var physics = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
         physics.AddRectangleCollision(new Vec2(35, 40));
@@ -62,25 +66,22 @@ public class Player: SharpEngine.Entities.Entity
             _invincibility = 0;
         
         
-        var control = GetComponent<ControlComponent>();
-        control.Speed = WS.PlayerData.Stats.Speed + WS.PlayerData.GetPassiveStats().Speed;
+        _controlComponent.Speed = WS.PlayerData.Stats.Speed + WS.PlayerData.GetPassiveStats().Speed;
 
-        var anim = GetComponent<AnimSpriteSheetComponent>();
-
-        anim.FlipX = control.Direction.X switch
+        _animSpriteSheetComponent.FlipX = _controlComponent.Direction.X switch
         {
             < 0 => true,
             > 0 => false,
-            _ => anim.FlipX
+            _ => _animSpriteSheetComponent.FlipX
         };
 
-        switch (control.IsMoving)
+        switch (_controlComponent.IsMoving)
         {
-            case true when anim.Anim == "idle":
-                anim.Anim = "walk";
+            case true when _animSpriteSheetComponent.Anim == "idle":
+                _animSpriteSheetComponent.Anim = "walk";
                 break;
-            case false when anim.Anim == "walk":
-                anim.Anim = "idle";
+            case false when _animSpriteSheetComponent.Anim == "walk":
+                _animSpriteSheetComponent.Anim = "idle";
                 break;
         }
     }
@@ -95,7 +96,7 @@ public class Player: SharpEngine.Entities.Entity
             if (WS.PlayerData.Life > maxLife)
                 WS.PlayerData.Life = maxLife;
             
-            GetComponent<LifeBarComponent>().Value = (float)WS.PlayerData.Life * 100 / maxLife;
+            _lifeBarComponent.Value = (float)WS.PlayerData.Life * 100 / maxLife;
 
             if (WS.PlayerData.Life <= 0)
             {
@@ -107,11 +108,11 @@ public class Player: SharpEngine.Entities.Entity
             {
                 case > 0:
                     _invincibility = 0.1;
-                    GetScene().AddEntity(new DamageDisplayer(GetComponent<TransformComponent>().Position, Color.DarkRed,
+                    GetScene().AddEntity(new DamageDisplayer(_transformComponent.Position, Color.DarkRed,
                         damage.ToString())).Initialize();
                     break;
                 case < 0:
-                    GetScene().AddEntity(new DamageDisplayer(GetComponent<TransformComponent>().Position, Color.Green,
+                    GetScene().AddEntity(new DamageDisplayer(_transformComponent.Position, Color.Green,
                         damage.ToString())).Initialize();
                     break;
             }
