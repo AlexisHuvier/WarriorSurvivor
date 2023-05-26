@@ -53,6 +53,10 @@ internal static class Program
         SoundManager.AddSound("chest", "Resource/Sounds/chest.wav");
         
         
+        // MUSICS
+        MusicManager.AddSong("game-music", new Uri("Resource/Musics/game-music.ogg", UriKind.Relative));
+        
+        
         // TEXTURES
         // General
         win.TextureManager.AddTexture("player", "Resource/Sprites/KnightM.png");

@@ -21,6 +21,13 @@ public class MainMenu: SharpEngine.Scene
     private static void RemoveCommand(Button _) => WS.SaveManager.Reset();
     private void PlayCommand(Button _) => GetWindow().IndexCurrentScene = 2;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        MusicManager.SetRepeating(true);
+        MusicManager.Play("game-music");
+    }
+
     public override void UnloadContent()
     {
         WS.SaveManager.WriteSave();
