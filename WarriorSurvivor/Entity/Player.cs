@@ -45,7 +45,7 @@ public class Player: SharpEngine.Entities.Entity
         if (GetScene<Game>().Chests.FirstOrDefault(c => c.GetComponent<PhysicsComponent>().Body == other.Body) is { } chest)
         {
             GetScene<Game>().RemoveChest(chest);
-            Console.WriteLine("OPEN CHEST");
+            GetScene<Game>().OpenChest();
             return false;
         }
 

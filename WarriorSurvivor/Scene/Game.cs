@@ -20,6 +20,7 @@ public class Game: SharpEngine.Scene
     private readonly SharpEngine.Entities.Entity?[] _passiveWeapons = { null, null, null, null, null };
     private readonly GoldDisplayer _goldLabel;
     private readonly GainLevelDisplayer _gainLevelDisplayer;
+    private readonly ChestDisplayer _chestDisplayer;
     private readonly Timer _timer;
     
     public Game()
@@ -28,6 +29,7 @@ public class Game: SharpEngine.Scene
         _timer = AddWidget(new Timer(new Vec2(60, 110)));
         _goldLabel = AddWidget(new GoldDisplayer(new Vec2(60, 140)));
         _gainLevelDisplayer = AddWidget(new GainLevelDisplayer());
+        _chestDisplayer = AddWidget(new ChestDisplayer());
         Init();
     }
 
@@ -46,12 +48,10 @@ public class Game: SharpEngine.Scene
         ActiveWeapon.Initialize();
         for (var i = 0; i < 5; i++)
             _passiveWeapons[i] = null;
-
-        for (var i = 0; i < 10; i++)
-            AddExpPoint(new ExpPoint(Player.GetComponent<TransformComponent>().Position + new Vec2(50 + 50 * i),
-                1));
         
         SetActiveWeapon(Weapon.ActiveWeapons["Couteau"]);
+
+        AddChest(new Chest(new Vec2(650, 500)));
     }
 
     public override void Update(GameTime gameTime)
@@ -67,6 +67,13 @@ public class Game: SharpEngine.Scene
     {
         _gainLevelDisplayer.Displayed = true;
         _gainLevelDisplayer.Reset();
+        Paused = true;
+    }
+
+    public void OpenChest()
+    {
+        _chestDisplayer.Displayed = true;
+        _chestDisplayer.Reset();
         Paused = true;
     }
 
