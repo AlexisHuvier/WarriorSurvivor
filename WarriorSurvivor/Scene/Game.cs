@@ -30,10 +30,10 @@ public class Game: SharpEngine.Scene
         _goldLabel = AddWidget(new GoldDisplayer(new Vec2(60, 140)));
         _gainLevelDisplayer = AddWidget(new GainLevelDisplayer());
         _chestDisplayer = AddWidget(new ChestDisplayer());
-        Init();
+        Init(false);
     }
 
-    public void Init()
+    public void Init(bool playSound = true)
     {
         RemoveAllEntities();
         
@@ -49,7 +49,7 @@ public class Game: SharpEngine.Scene
         for (var i = 0; i < 5; i++)
             _passiveWeapons[i] = null;
         
-        SetActiveWeapon(Weapon.ActiveWeapons["Couteau"]);
+        SetActiveWeapon(Weapon.ActiveWeapons["Couteau"], playSound);
 
         AddChest(new Chest(new Vec2(650, 500)));
     }
@@ -75,6 +75,7 @@ public class Game: SharpEngine.Scene
         _chestDisplayer.Displayed = true;
         _chestDisplayer.Reset();
         Paused = true;
+        SoundManager.Play("chest");
     }
 
     public Vec2? GetNearestEnemyPosition(int index = 0)
@@ -92,12 +93,14 @@ public class Game: SharpEngine.Scene
         return enemy[index].GetComponent<TransformComponent>().Position;
     }
 
-    public void SetActiveWeapon(Weapon? weapon)
+    public void SetActiveWeapon(Weapon? weapon, bool playSound = true)
     {
         if(weapon == null)
             ActiveWeapon.Init("", 1, new WeaponData());
         else
         {
+            if(playSound)
+                SoundManager.Play("equip");
             ActiveWeapon.Init(weapon.Icon, weapon.Scale,
                 weapon.Name == ActiveWeapon.Data.Name
                     ? new WeaponData(weapon.Name, weapon.BaseStats.Multiply(ActiveWeapon.Data.Stats.Level + 1))
@@ -118,7 +121,7 @@ public class Game: SharpEngine.Scene
         }
         else
             _passiveWeapons[index] = null;
-
+        
         Player.TakeDamage(0);
     }
 
@@ -142,6 +145,7 @@ public class Game: SharpEngine.Scene
 
     public void RemoveExpPoint(ExpPoint point)
     {
+        SoundManager.Play("exp_point-pop");
         RemoveEntity(point, true);
         ExpPoints.Remove(point);
     }

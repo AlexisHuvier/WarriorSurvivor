@@ -39,10 +39,22 @@ internal static class Program
             }
         };
         
+        // === RESOURCES ===
+        
+        // POLICES
         win.FontManager.AddFont("big", "Resource/Fonts/basic.ttf", 75);
         win.FontManager.AddFont("medium", "Resource/Fonts/basic.ttf", 50);
         win.FontManager.AddFont("small", "Resource/Fonts/basic.ttf", 35);
         
+        
+        // SOUND EFFECTS
+        SoundManager.AddSound("exp_point-pop", "Resource/Sounds/exp_point-pop.wav");
+        SoundManager.AddSound("equip", "Resource/Sounds/equip.wav");
+        SoundManager.AddSound("chest", "Resource/Sounds/chest.wav");
+        
+        
+        // TEXTURES
+        // General
         win.TextureManager.AddTexture("player", "Resource/Sprites/KnightM.png");
         win.TextureManager.AddTexture("bg", "Resource/Sprites/BG.png");
         win.TextureManager.AddTexture("enemy", "Resource/Sprites/Orc.png");
@@ -55,6 +67,8 @@ internal static class Program
         win.TextureManager.AddTexture("weapon-haltere", "Resource/Sprites/Weapons/icon-haltere.png");
         win.TextureManager.AddTexture("weapon-cercle_feu", "Resource/Sprites/Weapons/icon-cercle_feu.png");
         win.TextureManager.AddTexture("weapon-couteau", "Resource/Sprites/Weapons/icon-couteau.png");
+        
+        // === RESOURCES ===
         
         win.AddScene(new MainMenu());
         win.AddScene(new Game());

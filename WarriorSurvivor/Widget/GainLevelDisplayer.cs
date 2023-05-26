@@ -1,3 +1,4 @@
+using SharpEngine.Managers;
 using SharpEngine.Utils;
 using SharpEngine.Utils.Math;
 using SharpEngine.Widgets;
@@ -121,7 +122,7 @@ public class GainLevelDisplayer: SharpEngine.Widgets.Widget
                 break;
             }
         }
-
+        
         WS.PlayerData.PassiveWeapons[nb] = data;
 
         var entity = Weapon.PassiveWeapons[data.Name].GetEntity();
@@ -131,5 +132,6 @@ public class GainLevelDisplayer: SharpEngine.Widgets.Widget
         GetScene<Game>().Player.TakeDamage(0);
         Displayed = false;
         GetScene<Game>().Paused = false;
+        SoundManager.Play("equip");
     }
 }
