@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="SharpEngine" Version="0.19.5" />
+      <PackageReference Include="SharpEngine" Version="0.19.6" />
     </ItemGroup>
 
     <ItemGroup>
