@@ -42,6 +42,7 @@ public class Game: SharpEngine.Scene
         AddEntity(new Map()).Initialize();
         Player = AddEntity(new Player());
         Player.Initialize();
+        WS.OptionsManager.ApplyControls(Player);
         CameraManager.FollowEntity = Player;
 
         ActiveWeapon = AddEntity(new ActiveWeapon());

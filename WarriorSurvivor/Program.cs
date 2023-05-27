@@ -14,7 +14,7 @@ internal static class Program
 {
     private static void Main()
     {
-        var win = new Window(new Vec2(1200, 900), Color.CornflowerBlue, debug: true)
+        var win = new Window(new Vec2(1200, 900), Color.CornflowerBlue, exitWithEscape: false, debug: true)
         {
             RenderImGui = win =>
             {
@@ -81,6 +81,7 @@ internal static class Program
         win.AddScene(new MainMenu());
         win.AddScene(new Game());
         win.AddScene(new GameMenu());
+        win.AddScene(new Options());
 
         win.IndexCurrentScene = 0;
         win.Run();
