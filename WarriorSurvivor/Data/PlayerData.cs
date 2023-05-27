@@ -1,3 +1,4 @@
+using SharpEngine.Managers;
 using SharpEngine.Utils;
 
 namespace WarriorSurvivor.Data;
@@ -10,6 +11,7 @@ public struct PlayerData
     public int Exp = 0;
     public WeaponData? ActiveWeapon;
     public WeaponData?[] PassiveWeapons;
+    public readonly int[] UpgradeBuy = { 0, 0, 0 };
 
     public PlayerData()
     {
