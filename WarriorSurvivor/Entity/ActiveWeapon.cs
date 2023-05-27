@@ -38,10 +38,13 @@ public class ActiveWeapon: SharpEngine.Entities.Entity
     private bool CollisionCallback(Fixture self, Fixture other, Contact contact)
     {
         if (_sprite.Sprite == "" || MovingValue < 0.1f) return false;
-        
+
         if (GetScene<Game>().Enemies.FirstOrDefault(e => e.GetComponent<PhysicsComponent>().Body == other.Body) is
             { } enemy)
-            enemy.TakeDamage(Data.Stats.Attack + WS.PlayerData.Stats.Attack);
+        {
+            if(enemy.TakeDamage(Data.Stats.Attack + WS.PlayerData.Stats.Attack + WS.PlayerData.GetPassiveStats().Attack))
+                SoundManager.Play("enemy-hit");
+        }
 
         return false;
     }

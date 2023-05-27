@@ -55,6 +55,7 @@ public struct PlayerData
         if (Gold < diff)
             return false;
         Gold -= diff;
+        SoundManager.Play("gold");
         return true;
     }
 

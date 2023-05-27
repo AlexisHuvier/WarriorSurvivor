@@ -52,32 +52,32 @@ public class Enemy: SharpEngine.Entities.Entity
             _invincibility = 0;
     }
 
-    public void TakeDamage(int damage)
+    public bool TakeDamage(int damage)
     {
-        if (_invincibility <= 0 || damage < 0)
+        if (!(_invincibility <= 0) && damage >= 0) return false;
+        
+        Data.Life -= damage;
+        _lifeBarComponent.Value = (float)Data.Life * 100 / Data.Stats.Life;
+
+        if (Data.Life <= 0)
         {
-            Data.Life -= damage;
-            _lifeBarComponent.Value = (float)Data.Life * 100 / Data.Stats.Life;
-
-            if (Data.Life <= 0)
-            {
-                WS.PlayerData.ModifyGold(-1);
-                GetScene<Game>().AddExpPoint(new ExpPoint(_transformComponent.Position, Data.Stats.Level));
-                GetScene<Game>().RemoveEnemy(this);
-            }
-
-            switch (damage)
-            {
-                case > 0:
-                    _invincibility = 0.1;
-                    GetScene().AddEntity(new DamageDisplayer(_transformComponent.Position, Color.DarkRed,
-                        damage.ToString())).Initialize();
-                    break;
-                case < 0:
-                    GetScene().AddEntity(new DamageDisplayer(_transformComponent.Position, Color.Green,
-                        damage.ToString())).Initialize();
-                    break;
-            }
+            WS.PlayerData.ModifyGold(-1);
+            GetScene<Game>().AddExpPoint(new ExpPoint(_transformComponent.Position, Data.Stats.Level));
+            GetScene<Game>().RemoveEnemy(this);
         }
+
+        switch (damage)
+        {
+            case > 0:
+                _invincibility = 0.1;
+                GetScene().AddEntity(new DamageDisplayer(_transformComponent.Position, Color.DarkRed,
+                    damage.ToString())).Initialize();
+                break;
+            case < 0:
+                GetScene().AddEntity(new DamageDisplayer(_transformComponent.Position, Color.Green,
+                    damage.ToString())).Initialize();
+                break;
+        }
+        return true;
     }
 }

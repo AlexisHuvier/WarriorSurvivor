@@ -1,4 +1,5 @@
 using SharpEngine.Components;
+using SharpEngine.Managers;
 using SharpEngine.Utils.Math;
 using SharpEngine.Utils.Physic;
 using tainicom.Aether.Physics2D.Dynamics;
@@ -29,7 +30,8 @@ public class Knife: SharpEngine.Entities.Entity
         if (GetScene<Game>().Enemies.FirstOrDefault(e => e.GetComponent<PhysicsComponent>().Body == other.Body) is
             { } enemy)
         {
-            enemy.TakeDamage(_attack);
+            if(enemy.TakeDamage(_attack))
+                SoundManager.Play("enemy-hit");
             GetScene().RemoveEntity(this, true);
         }
 

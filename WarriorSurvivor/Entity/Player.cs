@@ -1,4 +1,5 @@
 using SharpEngine.Components;
+using SharpEngine.Managers;
 using SharpEngine.Utils;
 using SharpEngine.Utils.Control;
 using SharpEngine.Utils.Math;
@@ -12,6 +13,7 @@ namespace WarriorSurvivor.Entity;
 public class Player: SharpEngine.Entities.Entity
 {
     private double _invincibility;
+    private bool _playHitSound = true;
 
     private readonly ControlComponent _controlComponent;
     private readonly AnimSpriteSheetComponent _animSpriteSheetComponent;
@@ -86,36 +88,40 @@ public class Player: SharpEngine.Entities.Entity
         }
     }
 
-    public void TakeDamage(int damage)
+    public bool TakeDamage(int damage)
     {
-        if (_invincibility <= 0 || damage < 0)
+        if (_invincibility > 0 && damage >= 0) return false;
+        
+        WS.PlayerData.Life -= damage;
+        
+        var maxLife = WS.PlayerData.Stats.Life + WS.PlayerData.GetPassiveStats().Life;
+        if (WS.PlayerData.Life > maxLife)
+            WS.PlayerData.Life = maxLife;
+        
+        _lifeBarComponent.Value = (float)WS.PlayerData.Life * 100 / maxLife;
+
+        if (WS.PlayerData.Life <= 0)
         {
-            WS.PlayerData.Life -= damage;
-            
-            var maxLife = WS.PlayerData.Stats.Life + WS.PlayerData.GetPassiveStats().Life;
-            if (WS.PlayerData.Life > maxLife)
-                WS.PlayerData.Life = maxLife;
-            
-            _lifeBarComponent.Value = (float)WS.PlayerData.Life * 100 / maxLife;
-
-            if (WS.PlayerData.Life <= 0)
-            {
-                WS.PlayerData.Reset();
-                GetScene().GetWindow().IndexCurrentScene = 2;
-            }
-
-            switch (damage)
-            {
-                case > 0:
-                    _invincibility = 0.1;
-                    GetScene().AddEntity(new DamageDisplayer(_transformComponent.Position, Color.DarkRed,
-                        damage.ToString())).Initialize();
-                    break;
-                case < 0:
-                    GetScene().AddEntity(new DamageDisplayer(_transformComponent.Position, Color.Green,
-                        damage.ToString())).Initialize();
-                    break;
-            }
+            WS.PlayerData.Reset();
+            GetScene().GetWindow().IndexCurrentScene = 2;
         }
+
+        switch (damage)
+        {
+            case > 0:
+                _invincibility = 0.1;
+                if(_playHitSound)
+                    SoundManager.Play("player-hit");
+                _playHitSound = !_playHitSound;
+                GetScene().AddEntity(new DamageDisplayer(_transformComponent.Position, Color.DarkRed,
+                    damage.ToString())).Initialize();
+                break;
+            case < 0:
+                GetScene().AddEntity(new DamageDisplayer(_transformComponent.Position, Color.Green,
+                    damage.ToString())).Initialize();
+                break;
+        }
+
+        return true;
     }
 }

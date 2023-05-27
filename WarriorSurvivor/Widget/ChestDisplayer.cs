@@ -1,3 +1,4 @@
+using SharpEngine.Managers;
 using SharpEngine.Utils;
 using SharpEngine.Utils.Math;
 using SharpEngine.Widgets;
@@ -118,6 +119,7 @@ public class ChestDisplayer: SharpEngine.Widgets.Widget
 
         _texts[4] = GetRandomPrize();
         _labels[4].Text = _texts[4];
+        SoundManager.Play("beep");
     }
 
     public void Reset()

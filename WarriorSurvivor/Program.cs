@@ -51,6 +51,10 @@ internal static class Program
         SoundManager.AddSound("exp_point-pop", "Resource/Sounds/exp_point-pop.wav");
         SoundManager.AddSound("equip", "Resource/Sounds/equip.wav");
         SoundManager.AddSound("chest", "Resource/Sounds/chest.wav");
+        SoundManager.AddSound("enemy-hit", "Resource/Sounds/enemy-hit.wav");
+        SoundManager.AddSound("player-hit", "Resource/Sounds/player-hit.wav");
+        SoundManager.AddSound("beep", "Resource/Sounds/beep.wav");
+        SoundManager.AddSound("gold", "Resource/Sounds/gold.wav");
         
         
         // MUSICS
