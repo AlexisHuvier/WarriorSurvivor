@@ -21,7 +21,7 @@ public class ActiveWeapon: SharpEngine.Entities.Entity
     
     public ActiveWeapon()
     {
-        _transform = AddComponent(new TransformComponent(zLayer: 11));
+        _transform = AddComponent(new TransformComponent(zLayer: 12));
         _sprite = AddComponent(new SpriteComponent(""));
         _physics = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
         _physics.AddRectangleCollision(new Vec2(30), tag: FixtureTag.IgnoreCollisions);
