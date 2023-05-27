@@ -43,7 +43,7 @@ public class SpawnerComponent: SharpEngine.Components.Component
             GetEntity().GetScene<Game>().AddChest(new Chest(position));
         }
         
-        if (_enemyTimer >= GetEnemyTimer() && GetEntity().GetScene<Game>().Enemies.Count <= WS.EnemyCount)
+        if (_enemyTimer >= GetEnemyTimer() && GetEntity().GetScene<Game>().Enemies.Count <= WS.EnemyCount && GetEntity().GetScene<Game>().Boss == null)
         {
             _enemyTimer = 0;
             var corners = ((Map)GetEntity()).GetCorners();

@@ -1,5 +1,6 @@
 using SharpEngine.Components;
 using SharpEngine.Managers;
+using SharpEngine.Utils;
 using SharpEngine.Utils.Math;
 using WarriorSurvivor.Data;
 using WarriorSurvivor.Data.DB;
@@ -12,9 +13,11 @@ namespace WarriorSurvivor.Scene;
 public class Game: SharpEngine.Scene
 {
     public Player Player = null!;
+    public Boss? Boss = null;
     public readonly List<Enemy> Enemies = new();
     public readonly List<ExpPoint> ExpPoints = new();
     public readonly List<Chest> Chests = new();
+    public readonly List<Rock> Rocks = new();
     public ActiveWeapon ActiveWeapon = null!;
     
     private readonly SharpEngine.Entities.Entity?[] _passiveWeapons = { null, null, null, null, null };
@@ -51,8 +54,8 @@ public class Game: SharpEngine.Scene
             _passiveWeapons[i] = null;
         
         SetActiveWeapon(Weapon.ActiveWeapons["Couteau"], playSound);
-
-        AddChest(new Chest(new Vec2(650, 500)));
+        
+        SpawnBoss();
     }
 
     public override void Update(GameTime gameTime)
@@ -60,6 +63,45 @@ public class Game: SharpEngine.Scene
         base.Update(gameTime);
 
         _goldLabel.Text = $"Or : {WS.PlayerData.Gold}";
+    }
+
+    public void SpawnBoss()
+    {
+        foreach (var enemy in Enemies)
+            RemoveEntity(enemy, true);
+        Enemies.Clear();
+
+        var playerPosition = Player.GetComponent<TransformComponent>().Position;
+        for (var y = -500; y <= 500; y += 50)
+        {
+            var rock1 = AddEntity(new Rock(new Vec2(playerPosition.X - 500, playerPosition.Y + y)));
+            rock1.Initialize();
+            Rocks.Add(rock1);
+            var rock2 = AddEntity(new Rock(new Vec2(playerPosition.X + 500, playerPosition.Y + y)));
+            rock2.Initialize();
+            Rocks.Add(rock2);
+        }
+        
+        for (var x = -450; x < 500; x += 50)
+        {
+            var rock1 = AddEntity(new Rock(new Vec2(playerPosition.X + x, playerPosition.Y - 500)));
+            rock1.Initialize();
+            Rocks.Add(rock1);
+            var rock2 = AddEntity(new Rock(new Vec2(playerPosition.X + x, playerPosition.Y + 500)));
+            rock2.Initialize();
+            Rocks.Add(rock2);
+        }
+
+        var offset = Rand.GetRand(200, 400);
+        Boss = Rand.GetRand(4) switch
+        {
+            0 => AddEntity(new Boss(new Vec2(playerPosition.X - offset, playerPosition.Y - offset))),
+            1 => AddEntity(new Boss(new Vec2(playerPosition.X - offset, playerPosition.Y + offset))),
+            2 => AddEntity(new Boss(new Vec2(playerPosition.X + offset, playerPosition.Y + offset))),
+            3 => AddEntity(new Boss(new Vec2(playerPosition.X + offset, playerPosition.Y - offset))),
+            _ => Boss
+        };
+        Boss?.Initialize();
     }
 
     public double GetPlayTime() => _timer.Time;

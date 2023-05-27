@@ -67,6 +67,8 @@ internal static class Program
         win.TextureManager.AddTexture("bg", "Resource/Sprites/BG.png");
         win.TextureManager.AddTexture("enemy", "Resource/Sprites/Orc.png");
         win.TextureManager.AddTexture("chest", "Resource/Sprites/Chest.png");
+        win.TextureManager.AddTexture("boss", "Resource/Sprites/Boss.png");
+        win.TextureManager.AddTexture("rock", "Resource/Sprites/Rock.png");
         
         // Weapons
         win.TextureManager.AddTexture("weapon-null", "Resource/Sprites/Weapons/icon-null.png");
