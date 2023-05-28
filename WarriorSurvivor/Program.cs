@@ -14,30 +14,7 @@ internal static class Program
 {
     private static void Main()
     {
-        var win = new Window(new Vec2(1200, 900), Color.CornflowerBlue, exitWithEscape: false, debug: true)
-        {
-            RenderImGui = win =>
-            {
-                DebugManager.CreateSharpEngineImGuiWindow();
-                {
-                    ImGui.Begin("Warrior Survivor Information");
-                    ImGui.Text($"Current Scene : {win.IndexCurrentScene}");
-                    ImGui.Separator();
-                    if (win.IndexCurrentScene == 1 && ImGui.TreeNode("Game Information"))
-                    {
-                        ImGui.Text($"Active Weapon Speed : {win.GetCurrentScene<Game>().ActiveWeapon.MovingValue}");
-                        ImGui.Separator();
-                        var chests = win.GetCurrentScene<Game>().Chests;
-                        ImGui.Text($"Chest Pos : {(chests.Count > 0 ? chests[0].GetComponent<TransformComponent>().Position : "Nop")}");
-                        ImGui.Text($"Enemy Timer : {((Map)win.CurrentScene.GetEntities()[0]).GetComponent<SpawnerComponent>().GetEnemyTimer()}");
-                        ImGui.Text($"Enemy Count : {win.GetCurrentScene<Game>().Enemies.Count}");
-                        ImGui.TreePop();
-                    }
-
-                    ImGui.End();
-                }
-            }
-        };
+        var win = new Window(new Vec2(1200, 900), Color.CornflowerBlue, exitWithEscape: false);
         
         // === RESOURCES ===
         

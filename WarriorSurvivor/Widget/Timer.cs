@@ -28,7 +28,7 @@ public class Timer: SharpEngine.Widgets.Widget
         base.Draw(gameTime);
 
         Renderer.RenderText(GetWindow(), GetWindow().FontManager.GetFont("small"),
-            $"Time : {(int)Time / 60} min {(int)Time % 60} sec {(int)(Time % 1 * 1000)}", GetRealPosition(), Color.Black,
+            $"Temps : {(int)Time / 60} min {(int)Time % 60} sec {(int)(Time % 1 * 1000)}", GetRealPosition(), Color.Black,
             1);
     }
 }

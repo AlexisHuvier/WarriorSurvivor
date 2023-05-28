@@ -37,7 +37,8 @@ public class Enemy: SharpEngine.Entities.Entity
     private bool PhysCollisionCallback(Fixture fixture, Fixture other, Contact contact)
     {
         var player = ((Game)GetScene()).Player;
-        if (other.Body == player.GetComponent<PhysicsComponent>().Body) player.TakeDamage(Data.Stats.Attack);
+        if (other.Body == player.GetComponent<PhysicsComponent>().Body) 
+            player.TakeDamage(Data.Stats.Attack);
 
         return true;
     }
@@ -54,7 +55,7 @@ public class Enemy: SharpEngine.Entities.Entity
 
     public bool TakeDamage(int damage)
     {
-        if (!(_invincibility <= 0) && damage >= 0) return false;
+        if (_invincibility > 0 && damage >= 0) return false;
         
         Data.Life -= damage;
         _lifeBarComponent.Value = (float)Data.Life * 100 / Data.Stats.Life;
