@@ -54,8 +54,6 @@ public class Game: SharpEngine.Scene
             _passiveWeapons[i] = null;
         
         SetActiveWeapon(Weapon.ActiveWeapons["Couteau"], playSound);
-        
-        SpawnBoss();
     }
 
     public override void Update(GameTime gameTime)
@@ -63,10 +61,24 @@ public class Game: SharpEngine.Scene
         base.Update(gameTime);
 
         _goldLabel.Text = $"Or : {WS.PlayerData.Gold}";
+        if(_timer.Time is >= 180 and < 185 && Boss == null)
+            SpawnBoss();
     }
 
-    public void SpawnBoss()
+    public void BeatBoss()
     {
+        foreach (var rock in Rocks)
+            RemoveEntity(rock, true);
+        Rocks.Clear();
+        
+        RemoveEntity(Boss, true);
+        Boss = null;
+    }
+
+    private void SpawnBoss()
+    {
+        SoundManager.Play("boss");
+        
         foreach (var enemy in Enemies)
             RemoveEntity(enemy, true);
         Enemies.Clear();

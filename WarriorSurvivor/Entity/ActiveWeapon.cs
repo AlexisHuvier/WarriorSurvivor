@@ -46,6 +46,11 @@ public class ActiveWeapon: SharpEngine.Entities.Entity
                 SoundManager.Play("enemy-hit");
         }
 
+        var boss = GetScene<Game>().Boss;
+        if(boss != null && boss.GetComponent<PhysicsComponent>().Body == other.Body)
+            if(boss.TakeDamage(Data.Stats.Attack + WS.PlayerData.Stats.Attack + WS.PlayerData.GetPassiveStats().Attack))
+                SoundManager.Play("enemy-hit");
+
         return false;
     }
 

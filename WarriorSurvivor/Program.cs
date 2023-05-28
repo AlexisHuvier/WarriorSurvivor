@@ -55,6 +55,7 @@ internal static class Program
         SoundManager.AddSound("player-hit", "Resource/Sounds/player-hit.wav");
         SoundManager.AddSound("beep", "Resource/Sounds/beep.wav");
         SoundManager.AddSound("gold", "Resource/Sounds/gold.wav");
+        SoundManager.AddSound("boss", "Resource/Sounds/boss.wav");
         
         
         // MUSICS

@@ -43,8 +43,14 @@ public class FireCircle: SharpEngine.Entities.Entity
 
     private bool PhysCollisionCallback(Fixture fixture, Fixture other, Contact contact)
     {
-        if (GetScene<Game>().Enemies.FirstOrDefault(e => e.GetComponent<PhysicsComponent>().Body == other.Body) is { } enemy) 
+        if (GetScene<Game>().Enemies.FirstOrDefault(e => e.GetComponent<PhysicsComponent>().Body == other.Body) is
+            { } enemy)
             enemy.TakeDamage(2 * _data.Stats.Level);
+        
+        var boss = GetScene<Game>().Boss;
+        if (boss != null && boss.GetComponent<PhysicsComponent>().Body == other.Body)
+            boss.TakeDamage(2 * _data.Stats.Level);
+        
         return false;
     }
 

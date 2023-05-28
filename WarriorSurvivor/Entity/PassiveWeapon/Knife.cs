@@ -34,6 +34,14 @@ public class Knife: SharpEngine.Entities.Entity
                 SoundManager.Play("enemy-hit");
             GetScene().RemoveEntity(this, true);
         }
+        
+        var boss = GetScene<Game>().Boss;
+        if (boss != null && boss.GetComponent<PhysicsComponent>().Body == other.Body)
+        {
+            if (boss.TakeDamage(_attack))
+                SoundManager.Play("enemy-hit");
+            GetScene().RemoveEntity(this, true);
+        }
 
         return false;
     }
