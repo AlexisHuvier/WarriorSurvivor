@@ -11,8 +11,13 @@ public class LifeBarComponent: SharpEngine.Components.Component
     public float Value = 100;
     
     private readonly Vec2 _size = new(150, 20);
-    private readonly Vec2 _offset = new(0, 50);
+    private readonly Vec2 _offset;
     private TransformComponent _transformComponent = null!;
+
+    public LifeBarComponent(Vec2 offset)
+    {
+        _offset = offset;
+    }
 
     public override void Initialize()
     {

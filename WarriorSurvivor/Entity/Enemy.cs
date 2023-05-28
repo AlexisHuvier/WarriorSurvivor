@@ -28,7 +28,7 @@ public class Enemy: SharpEngine.Entities.Entity
             new("walk", new List<uint> { 4, 5, 6, 7 }, 100f)
         }, "idle"));
         AddComponent(new EnemyMoverComponent(data));
-        _lifeBarComponent = AddComponent(new LifeBarComponent());
+        _lifeBarComponent = AddComponent(new LifeBarComponent(new Vec2(0, 50)));
         var phys = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
         phys.AddRectangleCollision(new Vec2(35, 40));
         phys.CollisionCallback = PhysCollisionCallback;

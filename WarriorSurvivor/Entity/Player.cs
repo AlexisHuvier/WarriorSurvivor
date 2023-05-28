@@ -30,7 +30,7 @@ public class Player: SharpEngine.Entities.Entity
             new("walk", new List<uint> { 3, 4, 5, 6, 7, 8 }, 100f)
         }, "idle"));
         _controlComponent = AddComponent(new ControlComponent(ControlType.FourDirection));
-        _lifeBarComponent = AddComponent(new LifeBarComponent());
+        _lifeBarComponent = AddComponent(new LifeBarComponent(new Vec2(0, 60)));
         AddComponent(new ExpBarComponent());
         var physics = AddComponent(new PhysicsComponent(ignoreGravity: true, fixedRotation: true));
         physics.AddRectangleCollision(new Vec2(35, 40));
