@@ -17,9 +17,9 @@ public class GameMenu: SharpEngine.Scene
         AddWidget(new Button(new Vec2(400, 800), "Lancer une run", "small", new Vec2(200, 50))).Command = LaunchCommand;
         AddWidget(new Button(new Vec2(800, 800), "Menu", "small", new Vec2(200, 50))).Command = MenuCommand;
 
-        _lifeButton = AddWidget(new Button(new Vec2(600, 475), "Améliorer Vie (100 or)", "small", new Vec2(400, 50)));
-        _speedButton = AddWidget(new Button(new Vec2(600, 550), "Améliorer Vitesse (100 or)", "small", new Vec2(400, 50)));
-        _attackButton = AddWidget(new Button(new Vec2(600, 625), "Améliorer Attaque (100 or)", "small", new Vec2(400, 50)));
+        _lifeButton = AddWidget(new Button(new Vec2(600, 475), "Améliorer Vie (50 or)", "small", new Vec2(400, 50)));
+        _speedButton = AddWidget(new Button(new Vec2(600, 550), "Améliorer Vitesse (50 or)", "small", new Vec2(400, 50)));
+        _attackButton = AddWidget(new Button(new Vec2(600, 625), "Améliorer Attaque (50 or)", "small", new Vec2(400, 50)));
 
         _lifeButton.Command = UpgradeButtonCommand;
         _speedButton.Command = UpgradeButtonCommand;
@@ -31,13 +31,13 @@ public class GameMenu: SharpEngine.Scene
     private void OpenSceneCallback(SharpEngine.Scene _)
     {
         _playerDisplayer.UpdateInformation();
-        _lifeButton.Text = $"Améliorer Vie ({100 * (WS.PlayerData.UpgradeBuy[0] + 1)} or)";
-        _speedButton.Text = $"Améliorer Vitesse ({100 * (WS.PlayerData.UpgradeBuy[1] + 1)} or)";
-        _attackButton.Text = $"Améliorer Attaque ({100 * (WS.PlayerData.UpgradeBuy[2] + 1)} or)";
+        _lifeButton.Text = $"Améliorer Vie ({50 * (WS.PlayerData.UpgradeBuy[0] + 1)} or)";
+        _speedButton.Text = $"Améliorer Vitesse ({50 * (WS.PlayerData.UpgradeBuy[1] + 1)} or)";
+        _attackButton.Text = $"Améliorer Attaque ({50 * (WS.PlayerData.UpgradeBuy[2] + 1)} or)";
 
-        _lifeButton.Active = WS.PlayerData.Gold >= 100 * (WS.PlayerData.UpgradeBuy[0] + 1);
-        _speedButton.Active = WS.PlayerData.Gold >= 100 * (WS.PlayerData.UpgradeBuy[1] + 1);
-        _attackButton.Active = WS.PlayerData.Gold >= 100 * (WS.PlayerData.UpgradeBuy[2] + 1);
+        _lifeButton.Active = WS.PlayerData.Gold >= 50 * (WS.PlayerData.UpgradeBuy[0] + 1);
+        _speedButton.Active = WS.PlayerData.Gold >= 50 * (WS.PlayerData.UpgradeBuy[1] + 1);
+        _attackButton.Active = WS.PlayerData.Gold >= 50 * (WS.PlayerData.UpgradeBuy[2] + 1);
         
         WS.SaveManager.WriteSave();
     }
@@ -46,7 +46,7 @@ public class GameMenu: SharpEngine.Scene
     {
         if (button == _lifeButton)
         {
-            var cost = 100 * (WS.PlayerData.UpgradeBuy[0] + 1);
+            var cost = 50 * (WS.PlayerData.UpgradeBuy[0] + 1);
             if (!WS.PlayerData.ModifyGold(cost)) return;
             
             WS.PlayerData.Stats.Life += 10;
@@ -54,7 +54,7 @@ public class GameMenu: SharpEngine.Scene
         }
         else if (button == _speedButton)
         {
-            var cost = 100 * (WS.PlayerData.UpgradeBuy[1] + 1);
+            var cost = 50 * (WS.PlayerData.UpgradeBuy[1] + 1);
             if (!WS.PlayerData.ModifyGold(cost)) return;
             
             WS.PlayerData.Stats.Speed += 50;
@@ -62,7 +62,7 @@ public class GameMenu: SharpEngine.Scene
         }
         else if (button == _attackButton)
         {
-            var cost = 100 * (WS.PlayerData.UpgradeBuy[2] + 1);
+            var cost = 50 * (WS.PlayerData.UpgradeBuy[2] + 1);
             if (!WS.PlayerData.ModifyGold(cost)) return;
             
             WS.PlayerData.Stats.Attack += 2;
